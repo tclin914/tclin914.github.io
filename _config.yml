@@ -7,8 +7,8 @@ title: Jim's Dev Blog
 subtitle:
 description:
 author: Jim Lin
-language: zh-tw
-timezone:
+language: zh-TW
+timezone: Asia/Taipei
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
