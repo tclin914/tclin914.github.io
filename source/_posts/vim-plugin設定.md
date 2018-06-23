@@ -1,8 +1,10 @@
 ---
 title: vim plugin設定
+categories: vim
+tags: vim
 abbrlink: 14a4a927
 date: 2017-02-05 19:10:36
-tags:
+updated: 2017-02-05 19:10:36
 ---
 1. 先將Vundle抓下來
 ```

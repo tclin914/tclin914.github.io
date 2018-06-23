@@ -4,6 +4,7 @@ categories: GCC
 tags: GCC
 abbrlink: cf36a3a6
 date: 2017-08-08 21:48:12
+updated: 2017-08-08 21:48:12
 ---
 
 本文介紹如何編譯 GCC toolchain
