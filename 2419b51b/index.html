@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在 Shell programming中如何使用 if條件式。 if 條件式語法使用 command exit statusif command then     command     ... else     command     ... fi 使用 [ … ]if [ condition ] then     command     ... else     command     ...">
+<meta name="keywords" content="Shell programming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell programming: if 條件式">
+<meta property="og:url" content="https://tclin914.github.io/2419b51b/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="在 Shell programming中如何使用 if條件式。 if 條件式語法使用 command exit statusif command then     command     ... else     command     ... fi 使用 [ … ]if [ condition ] then     command     ... else     command     ...">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2018-05-06T03:23:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Shell programming: if 條件式">
+<meta name="twitter:description" content="在 Shell programming中如何使用 if條件式。 if 條件式語法使用 command exit statusif command then     command     ... else     command     ... fi 使用 [ … ]if [ condition ] then     command     ... else     command     ...">
+
+
+
+
+
+
+  <link rel="canonical" href="https://tclin914.github.io/2419b51b/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Shell programming: if 條件式 | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jim's Dev Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首頁</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />關於</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />標籤</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分類</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />歸檔</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/2419b51b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shell programming: if 條件式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-06 11:23:11" itemprop="dateCreated datePublished" datetime="2018-05-06T11:23:11+08:00">2018-05-06</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Shell-programming/" itemprop="url" rel="index"><span itemprop="name">Shell programming</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在 Shell programming中如何使用 if條件式。</p>
+<h4 id="if-條件式語法"><a href="#if-條件式語法" class="headerlink" title="if 條件式語法"></a>if 條件式語法</h4><h5 id="使用-command-exit-status"><a href="#使用-command-exit-status" class="headerlink" title="使用 command exit status"></a>使用 command exit status</h5><pre><code>if command
+then
+    command
+    ...
+else
+    command
+    ...
+fi
+</code></pre><h5 id="使用-…"><a href="#使用-…" class="headerlink" title="使用 [ … ]"></a>使用 [ … ]</h5><pre><code>if [ condition ]
+then
+    command
+    ...
+else
+    command
+    ...
+fi
+</code></pre><h5 id="使用-test-command"><a href="#使用-test-command" class="headerlink" title="使用 test command"></a>使用 test command</h5><pre><code>if test condition
+then
+    command
+    ...
+else
+    command
+    ...
+fi
+</code></pre><h4 id="if-比較運算子"><a href="#if-比較運算子" class="headerlink" title="if 比較運算子"></a>if 比較運算子</h4><h5 id="字串比較運算子"><a href="#字串比較運算子" class="headerlink" title="字串比較運算子"></a>字串比較運算子</h5><table>
+<thead>
+<tr>
+<th>[ … ]</th>
+<th>test command</th>
+<th>用法(回傳 TRUE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if [ string1 = string2 ]</td>
+<td>if test string1 = string2</td>
+<td>string1與 string2相同</td>
+</tr>
+<tr>
+<td>if [ string1 != string2 ]</td>
+<td>if test string1 != string2</td>
+<td>string1與 string2不相同</td>
+</tr>
+<tr>
+<td>if [ string ]</td>
+<td>if test string</td>
+<td>string 不為空值</td>
+</tr>
+<tr>
+<td>if [ -n string ]</td>
+<td>if test -n string</td>
+<td>string 不為空值</td>
+</tr>
+<tr>
+<td>if [ -z string ]</td>
+<td>if test -z string</td>
+<td>string 為空值</td>
+</tr>
+</tbody>
+</table>
+<h5 id="整數比較運算子"><a href="#整數比較運算子" class="headerlink" title="整數比較運算子"></a>整數比較運算子</h5><table>
+<thead>
+<tr>
+<th>[ … ]</th>
+<th>test command</th>
+<th>用法(回傳 True)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if [ int1 -eq int2 ]</td>
+<td>if test int1 -eq int2</td>
+<td>int1等於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -ne int2 ]</td>
+<td>if test int1 -ne int2</td>
+<td>int1不等於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -gt int2 ]</td>
+<td>if test int1 -gt int2</td>
+<td>int1大於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -ge int2 ]</td>
+<td>if test int1 -ge int2</td>
+<td>int1大於等於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -lt int2 ]</td>
+<td>if test int1 -lt int2</td>
+<td>int1小於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -le int2 ]</td>
+<td>if test int1 -le int2</td>
+<td>int1小於等於 int2</td>
+</tr>
+</tbody>
+</table>
+<h5 id="檔案運算子"><a href="#檔案運算子" class="headerlink" title="檔案運算子"></a>檔案運算子</h5><table>
+<thead>
+<tr>
+<th>[ … ]</th>
+<th>test command</th>
+<th>用法(回傳 True)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if [ -d file ]</td>
+<td>if test -d file</td>
+<td>file是個目錄</td>
+</tr>
+<tr>
+<td>if [ -e file ]</td>
+<td>if test -e file</td>
+<td>file存在</td>
+</tr>
+<tr>
+<td>if [ -f file ]</td>
+<td>if test -f file</td>
+<td>file是個檔案</td>
+</tr>
+<tr>
+<td>if [ -r file ]</td>
+<td>if test -r file</td>
+<td>file可被讀取</td>
+</tr>
+<tr>
+<td>if [ -s file ]</td>
+<td>if test -s file</td>
+<td>file內容非空</td>
+</tr>
+<tr>
+<td>if [ -w file ]</td>
+<td>if test -w file</td>
+<td>file可被寫入</td>
+</tr>
+<tr>
+<td>if [ -x file ]</td>
+<td>if test -x file</td>
+<td>file可被執行</td>
+</tr>
+<tr>
+<td>if [ -L file ]</td>
+<td>if test -x file</td>
+<td>file是個符號連結</td>
+</tr>
+<tr>
+<td>if [ -b file ]</td>
+<td>if test -b file</td>
+<td>file is a block special file</td>
+</tr>
+<tr>
+<td>if [ -c file ]</td>
+<td>if test -c file</td>
+<td>file is a character special file</td>
+</tr>
+<tr>
+<td>if [ -g file ]</td>
+<td>if test -g file</td>
+<td>file’s set group ID flag is set</td>
+</tr>
+<tr>
+<td>if [ -h file ]</td>
+<td>if test -h file</td>
+<td>file is a symbolic link. This operator is retained for compatibility with previous versions of this program. Do not rely on its existence; use -L instead.</td>
+</tr>
+<tr>
+<td>if [ -k file ]</td>
+<td>if test -k file</td>
+<td>file’s sticky bit is set</td>
+</tr>
+<tr>
+<td>if [ -p file ]</td>
+<td>if test -p file</td>
+<td>file is a named pipe (FIFO)</td>
+</tr>
+<tr>
+<td>if [ -u file ]</td>
+<td>if test -u file</td>
+<td>file’s set user ID flag is set</td>
+</tr>
+<tr>
+<td>if [ -O file ]</td>
+<td>if test -O file</td>
+<td>file’s owner matches the effective user id of this process</td>
+</tr>
+<tr>
+<td>if [ -G file ]</td>
+<td>if test -G file</td>
+<td>file’s group matches the effective group id of this process</td>
+</tr>
+<tr>
+<td>if [ -S file ]</td>
+<td>if test -S file</td>
+<td>file is a socket</td>
+</tr>
+<tr>
+<td>if [ file1 -nt file2 ]</td>
+<td>if test file1 -nt file2</td>
+<td>file1比 file2新</td>
+</tr>
+<tr>
+<td>if [ file1 -ot file2 ]</td>
+<td>if test file1 -ot file2</td>
+<td>file2比 file2舊</td>
+</tr>
+<tr>
+<td>if [ file1 -ef file2 ]</td>
+<td>if test file1 -ef file2</td>
+<td>file1與 file2參照到相同檔案</td>
+</tr>
+</tbody>
+</table>
+<h5 id="邏輯負運算子"><a href="#邏輯負運算子" class="headerlink" title="邏輯負運算子 !"></a>邏輯負運算子 !</h5><p>可使用 !來否定運算式的判斷，例如：<strong>[ ! -f file ]</strong>。</p>
+<h5 id="邏輯-and運算子-a"><a href="#邏輯-and運算子-a" class="headerlink" title="邏輯 and運算子 -a"></a>邏輯 and運算子 -a</h5><p>例如: <strong>[ -f file1  -a  -f file2 ]</strong>。</p>
+<h5 id="邏輯-or運算子-o"><a href="#邏輯-or運算子-o" class="headerlink" title="邏輯 or運算子 -o"></a>邏輯 or運算子 -o</h5><p>例如: <strong>[ -f file1  -o  -f file2 ]</strong>。</p>
+<h5 id="括號的使用"><a href="#括號的使用" class="headerlink" title="括號的使用"></a>括號的使用</h5><p>例如: <strong>[ \( -f file1 \)  -a  \(  -f file2 \) ]</strong>。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Shell-programming/" rel="tag"># Shell programming</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/8eaa3f8e/" rel="next" title="使用 GDB 來偵錯 LLVM">
+                <i class="fa fa-chevron-left"></i> 使用 GDB 來偵錯 LLVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/e9206a47/" rel="prev" title="C語言: ++*p, *p++和 *++p的不同">
+                C語言: ++*p, *p++和 *++p的不同 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jim Lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-條件式語法"><span class="nav-number">1.</span> <span class="nav-text">if 條件式語法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-command-exit-status"><span class="nav-number">1.1.</span> <span class="nav-text">使用 command exit status</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-…"><span class="nav-number">1.2.</span> <span class="nav-text">使用 [ … ]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用-test-command"><span class="nav-number">1.3.</span> <span class="nav-text">使用 test command</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-比較運算子"><span class="nav-number">2.</span> <span class="nav-text">if 比較運算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#字串比較運算子"><span class="nav-number">2.1.</span> <span class="nav-text">字串比較運算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#整數比較運算子"><span class="nav-number">2.2.</span> <span class="nav-text">整數比較運算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#檔案運算子"><span class="nav-number">2.3.</span> <span class="nav-text">檔案運算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#邏輯負運算子"><span class="nav-number">2.4.</span> <span class="nav-text">邏輯負運算子 !</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#邏輯-and運算子-a"><span class="nav-number">2.5.</span> <span class="nav-text">邏輯 and運算子 -a</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#邏輯-or運算子-o"><span class="nav-number">2.6.</span> <span class="nav-text">邏輯 or運算子 -o</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#括號的使用"><span class="nav-number">2.7.</span> <span class="nav-text">括號的使用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="RISC-V 是一個開放指令集架構，任何人可基於此架構實作，基本指令長度為32-bit，設計成容易擴充與客製化的指令集架構，基本指令集架構大約只有一百多道指令，有32-bit(RV32)，64-bit(RV64)和 128-bit(RV128)三種不同的暫存器長度，與模組化的擴充指令集。 RISC-V 指令集有以下四種基本指令集架構： RV32I Base Integer Instruction">
+<meta name="keywords" content="RISC-V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RISC-V 指令集架構介紹">
+<meta property="og:url" content="https://tclin914.github.io/3ad6268d/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="RISC-V 是一個開放指令集架構，任何人可基於此架構實作，基本指令長度為32-bit，設計成容易擴充與客製化的指令集架構，基本指令集架構大約只有一百多道指令，有32-bit(RV32)，64-bit(RV64)和 128-bit(RV128)三種不同的暫存器長度，與模組化的擴充指令集。 RISC-V 指令集有以下四種基本指令集架構： RV32I Base Integer Instruction">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2018-04-01T07:40:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RISC-V 指令集架構介紹">
+<meta name="twitter:description" content="RISC-V 是一個開放指令集架構，任何人可基於此架構實作，基本指令長度為32-bit，設計成容易擴充與客製化的指令集架構，基本指令集架構大約只有一百多道指令，有32-bit(RV32)，64-bit(RV64)和 128-bit(RV128)三種不同的暫存器長度，與模組化的擴充指令集。 RISC-V 指令集有以下四種基本指令集架構： RV32I Base Integer Instruction">
+
+
+
+
+
+
+  <link rel="canonical" href="https://tclin914.github.io/3ad6268d/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RISC-V 指令集架構介紹 | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jim's Dev Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首頁</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />關於</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />標籤</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分類</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />歸檔</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/3ad6268d/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RISC-V 指令集架構介紹
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-04-01 15:40:37" itemprop="dateCreated datePublished" datetime="2018-04-01T15:40:37+08:00">2018-04-01</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>RISC-V 是一個開放指令集架構，任何人可基於此架構實作，基本指令長度為32-bit，設計成容易擴充與客製化的指令集架構，基本指令集架構大約只有一百多道指令，有32-bit(RV32)，64-bit(RV64)和 128-bit(RV128)三種不同的暫存器長度，與模組化的擴充指令集。</p>
+<h4 id="RISC-V-指令集有以下四種基本指令集架構："><a href="#RISC-V-指令集有以下四種基本指令集架構：" class="headerlink" title="RISC-V 指令集有以下四種基本指令集架構："></a>RISC-V 指令集有以下四種基本指令集架構：</h4><ul>
+<li><strong>RV32I Base Integer Instruction Set</strong><br>  32-bit 基本整數指令集，有 32個 32-bit暫存器。</li>
+<li><strong>RV32E Base Integer Instruction Set</strong><br>  32-bit 嵌入式基本整數指令集，與 RV32I的差異為暫存器減少成只有 16個 32-bit暫存器。</li>
+<li><strong>RV64I Base Integer Instruction Set</strong><br>  64-bit 基本整數指令集，有 32個 64-bit暫存器。</li>
+<li><strong>RV128I Base Integer Instruction Set</strong><br>  128-bit 基本整數指令集，有 32個 128-bit暫存器。</li>
+</ul>
+<h4 id="標準擴充指令集-Standard-Extension-："><a href="#標準擴充指令集-Standard-Extension-：" class="headerlink" title="標準擴充指令集(Standard Extension)："></a>標準擴充指令集(Standard Extension)：</h4><ul>
+<li><strong>“M” Standard Extension for Integer Multiplication and Divison</strong><br>  新增了整數乘法除法指令。</li>
+<li><strong>“A” Standard Extension for Atomic Instructions</strong><br>  新增了 Atomic相關的指令。</li>
+<li><strong>“F” Standard Extension for Single-Precision Floating-Point</strong><br>  新增了 32個 32-bit的 floating-point暫存器(f0-f31)與其相關的指令。</li>
+<li><strong>“D” Standard Extension for Double-Precision Floating-Point</strong><br>  將 32個 floating-point暫存器(f0-f31)擴大成 64-bit與新增其相關的指令。</li>
+<li><strong>“Q” Standard Extension for Quard-Precision Floating-point</strong><br>  將 32個 floating-point暫存器(f0-f31)擴大成 128-bit與新增其相關的指令。</li>
+<li><strong>“C” Standard Extension for Compressed Instruction</strong><br>  新增了 16-bit長度的指令，用來替換掉常用到的 32-bit長度的指令，可減少 code size。</li>
+<li><strong>“G”</strong><br>  為 I，M，A，F和D 的組合(IMAFD)。</li>
+</ul>
+<p>還有一些已保留其名字，但尚未詳細制定指令的標準擴充指令集，例：”L”，”B”，”J”，”T”，”P”，”V” 和 “N”</p>
+<p>可以把任一基本指令集加上一個或多個擴充指令集使用，例如：</p>
+<ul>
+<li><strong>RV32IMA</strong><br>  即為 32-bit基本整數指令集加上整數乘法除法指令與 atomic相關指令。</li>
+<li><strong>RV64IMAFD</strong><br>  即為 64-bit基本整數指令集加上整數乘法除法指令，atomic相關指令，single-precision與 Double-precision其 floating-point暫存器與其相關指令。</li>
+</ul>
+<p>RISC-V 可自行新增指令集，為非標準擴充指令集(Non-Standard Extension)，若想要在 RV32IMA之外新增某些指令稱為 “H”，則稱為 RV32IMAXH，接在 “X”之後的為非標準擴充指令集，RISC-V 提供了相當的彈性去選擇所需的標準擴充指令集，也可再加上自行客製化的非標準擴充指令集。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RISC-V/" rel="tag"># RISC-V</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/cf36a3a6/" rel="next" title="編譯 GCC toolchain">
+                <i class="fa fa-chevron-left"></i> 編譯 GCC toolchain
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/a0c0fe90/" rel="prev" title="編譯 LLVM 與 Clang">
+                編譯 LLVM 與 Clang <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jim Lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#RISC-V-指令集有以下四種基本指令集架構："><span class="nav-number">1.</span> <span class="nav-text">RISC-V 指令集有以下四種基本指令集架構：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#標準擴充指令集-Standard-Extension-："><span class="nav-number">2.</span> <span class="nav-text">標準擴充指令集(Standard Extension)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

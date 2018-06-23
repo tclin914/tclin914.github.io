@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Jim&#39;s Dev Blog">
+<meta property="og:url" content="https://tclin914.github.io/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:locale" content="zh-TW">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jim&#39;s Dev Blog">
+
+
+
+
+
+
+  <link rel="canonical" href="https://tclin914.github.io/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jim's Dev Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home menu-item-active">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首頁</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />關於</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />標籤</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分類</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />歸檔</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/3d45634e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/3d45634e/" itemprop="url">
+                  RISC-V 指令集架構介紹 - F Standard Extension
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-06-23 17:05:03" itemprop="dateCreated datePublished" datetime="2018-06-23T17:05:03+08:00">2018-06-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>F standard extension為單精度浮點數(single-precision floating-point)指令擴充，增加了 32個浮點數暫存器(f0-f31)，長度為 32-bit，以及一個浮點數控制與狀態暫存器(fcsr)，與 IEEE 754-2008相容。</p>
+<p>下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器則為 f0-f31。</p>
+<h3 id="浮點數控制與狀態暫存器-Floating-Point-Control-and-Status-Register"><a href="#浮點數控制與狀態暫存器-Floating-Point-Control-and-Status-Register" class="headerlink" title="浮點數控制與狀態暫存器 (Floating-Point Control and Status Register)"></a>浮點數控制與狀態暫存器 (Floating-Point Control and Status Register)</h3><img src="/3d45634e/fcsr.png">
+<p>浮點數指令可設定成動態的去參照目前 fcsr中的 Rounding Mode bits來決定如何 rounding，fcsr的 Rounding Mode編碼則為下方表格。</p>
+<img src="/3d45634e/rounding_mode_encoding.png">
+<p>若發生 floating point exception，則會去設定相對應的 fcsr exception flags，下方表格為各個 flag與其 floating point exception的對照。</p>
+<img src="/3d45634e/exception_flag_encoding.png">
+<h3 id="單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions"><a href="#單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions" class="headerlink" title="單精度載入與儲存指令 (Single-Precision Load and Store Instructions)"></a>單精度載入與儲存指令 (Single-Precision Load and Store Instructions)</h3><ul>
+<li><p><strong>FLW</strong><br>  <em>flw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，載入位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 single-precision浮點數值從記憶體中載入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FSW</strong><br>  <em>fsw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，儲存位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 rs1浮點數暫存器的 single-precision浮點數值寫入記憶體。</p>
+</li>
+</ul>
+<h3 id="單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions"><a href="#單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions" class="headerlink" title="單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)"></a>單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)</h3><ul>
+<li><p><strong>FADD.S/FSUB.S</strong><br>  <em>fadd.s/fsub.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做加法/減法運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FMUL.S/FDIV.S</strong><br>  <em>fmul.s/fdiv.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做乘法/除法運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FMIN.S/FMAX.S</strong><br>  <em>fmin.s/fmax.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做最大值/最小值比較，將最大值/最小值寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FSQRT.S</strong><br>  <em>fsqrt.s rd, rs1</em><br>  將 rs1浮點數暫存器做取平方根運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>F[N]MADD/F[N]MSUB</strong><br>  <em>f[n]madd/f[n]msub rd, rs1, rs2, rs3</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做乘法運算後，再與 rs3浮點數暫存器做加法/乘法運算，結果寫入 rd浮點數暫存器，n版本則為做完乘法運算後取 negate，為乘法與加法指令一次完成，中間並沒有經過 rounding，所以精準度上會比一般乘法指令加上加法指令還高。</p>
+</li>
+</ul>
+<h3 id="單精度浮點數轉換與移動指令-Single-precision-Floating-Point-Conversion-and-Move-Instructions"><a href="#單精度浮點數轉換與移動指令-Single-precision-Floating-Point-Conversion-and-Move-Instructions" class="headerlink" title="單精度浮點數轉換與移動指令 (Single-precision Floating-Point Conversion and Move Instructions)"></a>單精度浮點數轉換與移動指令 (Single-precision Floating-Point Conversion and Move Instructions)</h3><p>將浮點數轉換為整數或整數轉換為浮點數指令，會根據指令中的 rm field來決定轉換的 rounding mode。</p>
+<ul>
+<li><p><strong>FCVT.W.S/FCVT.L.S</strong><br>  <em>fcvt.w.s/fcvt.l.s rd, rs1</em><br>  將 rs1浮點數暫存器中的浮點數轉換為 signed 32-bit/64-bit，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.S.W/FCVT.S.L</strong><br>  <em>fcvt.s.w/fcvt.s.l rd, rs1</em><br>  將 rs1一般暫存器中的signed 整數轉換為浮點數，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.WU.S/FCVT.LU.S</strong><br>  <em>fcvt.wu.s/fcvt.lu.s rd, rs1</em><br>  將 rs1浮點數暫存器中的浮點數轉換為 unsigned 32-bit/64-bit，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.S.WU/FCVT.S.LU</strong><br>  <em>fcvt.s.wu/fcvt.s.lu rd, rs1</em><br>  將 rs1一般暫存器中的unsigned 整數轉換為浮點數，結果寫入 rd一般暫存器。</p>
+</li>
+</ul>
+<p>sign-injection instructions</p>
+<ul>
+<li><p><strong>FSGNJ.S</strong><br>  <em>fsgnj.s rd, rs1, rs2</em><br>  rd浮點數暫存器中的數值來自 rs1浮點數暫存器，sign bit則為 rs2浮點數暫存器的 sign bit。</p>
+</li>
+<li><p><strong>FSGNJN.S</strong><br>  <em>fsgnjn.s rd, rs1, rs2</em><br>  rd浮點數暫存器中的數值來自 rs1浮點數暫存器，sign bit則為 rs2浮點數暫存器的 sign bit的相反。</p>
+</li>
+<li><p><strong>FSGNJX.S</strong><br>  <em>fsgnjx.s rd, rs1, rs2</em><br>  rd浮點數暫存器的數值來自 rs1浮點數暫存器，sign bit則為 rs1浮點數暫存器的 sign bit與 rs2浮點數暫存器的 sign bit做 xor運算。</p>
+</li>
+</ul>
+<p>單純 floating point與 integer之間的 move指令，與上面不同的是，只做 bit的移動，並不做浮點數與整數之間的轉換。</p>
+<ul>
+<li><p><strong>FMV.X.W</strong><br>  <em>fmv.x.w rd, rs1</em><br>  將 rs1浮點數暫存器的 32-bit數值寫入 rd一般暫存器中，若在 RV64，則用 sign bit填滿最高 32-bit。</p>
+</li>
+<li><p><strong>FMV.W.X</strong><br>  <em>fmv.w.x rd, rs1</em><br>  將 rs1一般暫存器的最低 32-bit(已用IEEE 754-2008編碼好)數值寫入 rd浮點數暫存器。</p>
+</li>
+</ul>
+<h3 id="單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions"><a href="#單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions" class="headerlink" title="單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)"></a>單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)</h3><ul>
+<li><strong>FEQ.S/FLT.S/FLE.S</strong><br>  <em>feq.s/flt.s/fle.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做 eq/lt/le比較，結果寫入 rd一般暫存器。</li>
+</ul>
+<h3 id="單精度浮點數分類指令-Single-Precision-Floating-Point-Classify-Instruction"><a href="#單精度浮點數分類指令-Single-Precision-Floating-Point-Classify-Instruction" class="headerlink" title="單精度浮點數分類指令 (Single-Precision Floating-Point Classify Instruction)"></a>單精度浮點數分類指令 (Single-Precision Floating-Point Classify Instruction)</h3><ul>
+<li><strong>FCLASS.S</strong><br>  <em>fclass.s rd, rs1</em><br>  根據下表分類 rs1浮點數暫存器的浮點數值，結果寫入 rd一般暫存器。</li>
+</ul>
+<img src="/3d45634e/fclass.png">
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/2723020e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2723020e/" itemprop="url">
+                  更改所有目錄檔案權限方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-06-20 22:42:38" itemprop="dateCreated datePublished" datetime="2018-06-20T22:42:38+08:00">2018-06-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>這邊紀錄一下如何一口氣更改所有目錄檔案的方法。</p>
+<p>習慣上，希望目錄權限為 755 (drwxr-xr-x)，檔案權限則為 644(-rw-r–r–)。</p>
+<p>更改目錄權限：</p>
+<pre><code>find . -type d -exec chmod 755 {} \;
+</code></pre><p>更改檔案權限：</p>
+<pre><code>find . -type f -exec chmod 644 {} \;
+</code></pre><p>使用 find指令去過濾為目錄或檔案，接著更改權限。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/251befd7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/251befd7/" itemprop="url">
+                  ssh 免密碼登入
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-06-08 14:54:08" itemprop="dateCreated datePublished" datetime="2018-06-08T14:54:08+08:00">2018-06-08</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。</p>
+<p>假設我們目前在 A機器，想要連線 B機器。</p>
+<p>先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~/.ssh，按下 enter繼續。</p>
+<pre><code>jim@A:~ $ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/users/jim/.ssh/id_rsa):
+</code></pre><p>請勿輸入密碼，直接按下 enter繼續。</p>
+<pre><code>Enter passphrase (empty for no passphrase):
+</code></pre><p>一樣不用輸入密碼，直接按下 enter繼續。</p>
+<pre><code>Enter same passphrase again:
+</code></pre><p>建立好 key了。</p>
+<pre><code>Your public key has been saved in /home/users/jim/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:Q14hkz7AJG0rcEv1kmffq6gE5C6GkqTb9J/CYWj8UHw jim@A
+</code></pre><p>解說一下產生的一對 key的作用。</p>
+<ul>
+<li>id_rsa: private key</li>
+<li>id_rsa.pub: public key</li>
+</ul>
+<p>將 id_rsa.pub的內容複製到遠端機器的 ~/.ssh/authorized_keys中，之後在登入時，便會用本地的 id_rsa與遠端機器的 id_rsa.pub做認證，便可免輸入密碼登入遠端機器。</p>
+<p>接下來在 B機器建立目錄 ~/.ssh，如果已有可跳過此步驟。</p>
+<pre><code>jim@A:~ $ ssh b@B mkdir -p .ssh
+jim@B&apos;s password:
+</code></pre><p>把 A機器的 ~/.ssh/id_rsa.pub也就是 public key複製到 B機器的 .ssh/authorized_keys。</p>
+<p>方法 1</p>
+<pre><code>jim@A:~ $ cat .ssh/id_rsa.pub | ssh jim@B &apos;cat &gt;&gt; .ssh/authorized_keys&apos;
+jim@B&apos;s password:
+</code></pre><p>方法 2</p>
+<pre><code>jim@A:~ $ ssh-copy-id -i .ssh/id_rsa.pub jim@B
+jim@B&apos;s password:
+</code></pre><p>即可成功登入 B機器而不需要輸入密碼了。</p>
+<pre><code>jim@A:~ $ ssh jim@B
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/d7ed614/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/d7ed614/" itemprop="url">
+                  資料模型 Data Model - LP32 ILP32 LP64 ILP64 LLP64
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-24 05:31:31" itemprop="dateCreated datePublished" datetime="2018-05-24T05:31:31+08:00">2018-05-24</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Data-Model/" itemprop="url" rel="index"><span itemprop="name">Data Model</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本文介紹一下資料模型 (Data Model)，下表格為 C語言型別對應不同資料模型的長度。</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>LP32</th>
+<th>ILP32</th>
+<th>LP64</th>
+<th>ILP64</th>
+<th>LLP64</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHAR</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>SHORT</td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>16</td>
+<td>32</td>
+<td>32</td>
+<td>64</td>
+<td>32</td>
+</tr>
+<tr>
+<td>LONG</td>
+<td>32</td>
+<td>32</td>
+<td>64</td>
+<td>64</td>
+<td>32</td>
+</tr>
+<tr>
+<td>LONG LONG</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr>
+<td>POINTER</td>
+<td>32</td>
+<td>32</td>
+<td>64</td>
+<td>64</td>
+<td>64</td>
+</tr>
+</tbody>
+</table>
+<p>LP32 與 ILP32是在 32-bit平台，LP64、ILP64 與 LLP64則是在 64-bit平台。</p>
+<p>LP32 指的是 LONG與 POINTER為 32-bit，ILP32 指的是 INT、LONG與 POINTER為 32-bit，LP64 指的是 LONG與 POINTER為 64-bit，ILP64 指的是 INT、LONG與POINTER為 64-bit，LLP64 指的是 LONG LONG與 POINTER為 64-bit，不管是在哪個資料模型，LONG LONG皆為是 64-bit。</p>
+<p>資料模型規定了每個 C語言型別的長度，讓編譯器編譯出來的程式能使用正確的資料長度與平台溝通。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/f37f836/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/f37f836/" itemprop="url">
+                  RISC-V 指令集架構介紹 - M Standard Extension
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-22 05:44:36" itemprop="dateCreated datePublished" datetime="2018-05-22T05:44:36+08:00">2018-05-22</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>M standard extension為整數乘法與除法指令擴充，RV32IM 即為RV32I 指令集加上 M standard extension，RV64IM 即為RV64I 指令集加上 M standard extension，以下所提到的 XLEN-bit在 RV32或 RV64分別是 32-bit與 64-bit，介紹各個指令的用途與格式。</p>
+<h3 id="乘法運算-Multiplication-Operations"><a href="#乘法運算-Multiplication-Operations" class="headerlink" title="乘法運算 (Multiplication Operations)"></a>乘法運算 (Multiplication Operations)</h3><ul>
+<li><p><strong>MUL</strong><br>  <em>MUL rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做乘法運算，會產生 2 x XLEN-bit 的運算結果，將此結果的最低 XLEN-bit寫入 rd暫存器。</p>
+</li>
+<li><p><strong>MULH/MULHU/MULHSU</strong><br>  <em>mulh/mulhu/mulhsu rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做乘法運算，會產生 2 x XLEN-bit 的運算結果，將此結果的最高 XLEN-bit寫入 rd暫存器。MULH 為 signed x signed，MULHU 為 unsigned x unsigned，MULHSU 為 signed x unsigned。</p>
+</li>
+<li><p><strong>MULW</strong><br>  <em>mulw rd, rs1, rs2</em><br>  RV64 才會有此道指令，將 rs1暫存器的最低 32-bit與 rs2暫存器的最低 32-bit做乘法運算，並將此結果的最低 32-bit做 sign-extension成 64-bit寫入 rd暫存器。</p>
+</li>
+</ul>
+<h3 id="除法運算-Division-Operations"><a href="#除法運算-Division-Operations" class="headerlink" title="除法運算 (Division Operations)"></a>除法運算 (Division Operations)</h3><ul>
+<li><p><strong>DIV/DIVU</strong><br>  <em>div/divu rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做 signed/unsigned 除法運算，結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>REM/REMU</strong><br>  <em>rem/remu rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做 signed/unsigned 餘數運算，結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>DIVW/DIVUW</strong><br>  <em>divw/divuw rd, rs1, rs2</em><br>  RV64 才會有此道指令，將 rs1暫存器的最低 32-bit與 rs2暫存器的最低 32-bit做 signed/unsigned 除法運算，並將此結果做 sign-extension成 64-bit寫入 rd暫存器。</p>
+</li>
+<li><p><strong>REMW/REMUW</strong><br>  <em>remw/remuw rd, rs1, rs2</em><br>  RV64 才會有此道指令，將 rs1暫存器的最低 32-bit與 rs2暫存器的最低 32-bit做 signed/unsigned 餘數運算，並將此結果做 sign-extension成 64-bit寫入 rd暫存器。</p>
+</li>
+</ul>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/464e7cd9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/464e7cd9/" itemprop="url">
+                  RISC-V 指令集架構介紹 - RV64I
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-21 10:49:06" itemprop="dateCreated datePublished" datetime="2018-05-21T10:49:06+08:00">2018-05-21</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>RV64I是基於 RV32I的指令集架構，本文只會說明與 RV32I不同之處，RV64I將在 RV32I的 32個 32-bit暫存器給擴大成 64-bit，所有的指令也轉換成是操作在 64-bit暫存器上，也額外增加一些指令能夠操作 64-bit暫存器中的最低 32-bit，這些指令會以 <strong>W</strong> 為結尾，以下介紹各個指令的用途與格式。</p>
+<h3 id="整數運算指令-Integer-Computational-Instructions"><a href="#整數運算指令-Integer-Computational-Instructions" class="headerlink" title="整數運算指令 (Integer Computational Instructions)"></a>整數運算指令 (Integer Computational Instructions)</h3><h4 id="整數暫存器與常數指令-Integer-Register-Immediate-Instructions"><a href="#整數暫存器與常數指令-Integer-Register-Immediate-Instructions" class="headerlink" title="整數暫存器與常數指令 (Integer Register-Immediate Instructions)"></a>整數暫存器與常數指令 (Integer Register-Immediate Instructions)</h4><p>指令為暫存器與常數之間的運算</p>
+<ul>
+<li><p><strong>ADDIW</strong><br>  <em>addiw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器的最低 32-bit做加法運算，並將此結果 sign-extension成 64-bit寫入 rd暫存器。<em>addiw rd, rs1, 0</em> 是將 rs1暫存器的最低 32-bit做 sign-extension成 64-bit寫入 rd暫存器，可寫成 sext.w rd, rs1</p>
+</li>
+<li><p><strong>SLLI/SRLI/SRAI</strong><br>  <em>slli/srli/srai rd, rs1, uimm6</em><br>  常數部分為 unsigned 6-bit，範圍為 0~63，為 shift amount，將 rs1暫存器做 shift運算，結果寫入 rd暫存器，SLLI為 logical左移，會補 0到最低位元，SRLI為 logical右移，會補 0到最高位元，SRAI為 arithmetic右移，會將原本的 sign bit複製到最高位元。</p>
+</li>
+<li><p><strong>SLLIW/SRLIW/SRAIW</strong><br>  <em>slliw/srliw/sraiw rd, rs1, uimm5</em><br>  常數部分為 unsigned 5-bit，範圍為 0~31，為 shift amount，將 rs1暫存器的最低 32-bit做 shift運算，並將此結果 sign-extension成 64-bit寫入 rd暫存器，SLLIW為 logical左移，會補 0到最低位元，SRLIW為 logical右移，會補 0到最高位元，SRAIW為 arithmetic右移，會將原本的 sign bit複製到最高位元。</p>
+</li>
+<li><p><strong>LUI (Load upper immediate)</strong><br>  <em>lui rd, uimm20</em><br>  將 unsigned 20-bit放到 rd暫存器的 31-12 bits，並將最低的 12-bit補 0。</p>
+</li>
+<li><p><strong>AUIPC(add upper immediate to pc)</strong><br>  <em>auipc rd, uimm20</em><br>  unsigned 20-bit放到最高 20位元，剩餘 12位元補0，將此 32-bit數值 sign-extension成 64-bit，與 pc相加寫入 rd暫存器。</p>
+</li>
+</ul>
+<h4 id="整數暫存器與暫存器指令-Integer-Register-Register-Insructions"><a href="#整數暫存器與暫存器指令-Integer-Register-Register-Insructions" class="headerlink" title="整數暫存器與暫存器指令 (Integer Register-Register Insructions)"></a>整數暫存器與暫存器指令 (Integer Register-Register Insructions)</h4><p>指令為暫存器與暫存器之間的運算</p>
+<ul>
+<li><p><strong>ADDW/SUBW</strong><br>  <em>addw/subw rd, rs1, rs2</em><br>  將 rs1暫存器的最低 32-bit與 rs2暫存器的最低 32-bit做加法/減法運算，並將此結果 sign-extension成 64-bit寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLL/SRL/SRA</strong><br>  <em>sll/srl/sra rd, rs1,, rs2</em><br>  將 rs1暫存器做 shift運算，結果寫入 rd暫存器，rs2暫存器的最低 6-bit為 shift amount。</p>
+</li>
+<li><p><strong>SLLW/SRLW/SRAW</strong><br>  <em>sllw/srlw/sraw rd, rs1,, rs2</em><br>  將 rs1暫存器的最低 32-bit做 shift運算，並將此結果 sign-extension成 64-bit寫入 rd暫存器，rs2暫存器的最低 5-bit為 shift amount。</p>
+</li>
+</ul>
+<h3 id="載入與儲存指令-Load-and-Store-Instructions"><a href="#載入與儲存指令-Load-and-Store-Instructions" class="headerlink" title="載入與儲存指令 (Load and Store Instructions)"></a>載入與儲存指令 (Load and Store Instructions)</h3><ul>
+<li><p><strong>LD/LW/LWU</strong><br>  <em>ld/lw/lwu rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，載入位址則為 rs1暫存器加上 sign-extended 12-bit，LD為載入 64-bit資料寫入 rd暫存器，LW/LWU為載入 32-bit資料分別做 unsigned/signed extension成 64-bit後寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SD</strong><br>  <em>sd rs2, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，儲存位址則為 rs1暫存器加上 sign-extended 12-bit，SD為將 rs2暫存器完整 64-bit資料寫入記憶體。</p>
+</li>
+</ul>
+<p>RV64I指令集也包含本文沒有提到的 RV32I指令，功能一樣，只是將操作的暫存器寬度從 32-bit擴大為 64-bit。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/f8c5f0e1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/f8c5f0e1/" itemprop="url">
+                  Shell programming: case 用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-16 13:21:42" itemprop="dateCreated datePublished" datetime="2018-05-16T13:21:42+08:00">2018-05-16</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Shell-programming/" itemprop="url" rel="index"><span itemprop="name">Shell programming</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在 Shell programming中如何使用 case。</p>
+<h4 id="case-語法"><a href="#case-語法" class="headerlink" title="case 語法"></a>case 語法</h4><pre><code>case value in
+    pattern1)
+        command
+        ...
+        command
+        ;;
+    pattern2)
+        command
+        ...
+        command
+        ;;
+    pattern3)
+        command
+        ...
+        command
+        ;;
+    ...
+esac
+</code></pre><h4 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$#</span>"</span> -ne 1 ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$0</span> [0-9]"</span></span><br><span class="line">  <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></span><br><span class="line">    0) <span class="built_in">echo</span> zero;;</span><br><span class="line">    1) <span class="built_in">echo</span> one;;</span><br><span class="line">    2) <span class="built_in">echo</span> two;;</span><br><span class="line">    3) <span class="built_in">echo</span> three;;</span><br><span class="line">    4) <span class="built_in">echo</span> four;;</span><br><span class="line">    5) <span class="built_in">echo</span> five;;</span><br><span class="line">    6) <span class="built_in">echo</span> six;;</span><br><span class="line">    7) <span class="built_in">echo</span> seven;;</span><br><span class="line">    8) <span class="built_in">echo</span> eight;;</span><br><span class="line">    9) <span class="built_in">echo</span> nine;;</span><br><span class="line">    *) <span class="built_in">echo</span> <span class="string">"The input is not between 0 and 9."</span></span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+<h4 id="進階用法"><a href="#進階用法" class="headerlink" title="進階用法"></a>進階用法</h4><ol>
+<li><p>多個情況匹配的時候，類似 or的功能<br> pattern1 | pattern2</p>
+</li>
+<li><p>一個範圍匹配<br> [0-9]</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/77838749/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/77838749/" itemprop="url">
+                  RISC-V 指令集架構介紹 - Integer Calling convention
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-09 07:29:20" itemprop="dateCreated datePublished" datetime="2018-05-09T07:29:20+08:00">2018-05-09</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Integer-Calling-convention"><a href="#Integer-Calling-convention" class="headerlink" title="Integer Calling convention"></a>Integer Calling convention</h3><p>有 32個 32-bit(RV32)或 64-bit(RV64)的暫存器(register)，為 x0-x31，下表為各個暫存器其 ABI Name與其用途：</p>
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th>ABI Name</th>
+<th>Description</th>
+<th>Saver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x0</td>
+<td>zero</td>
+<td>Hard-wired zero</td>
+<td>-</td>
+</tr>
+<tr>
+<td>x1</td>
+<td>ra</td>
+<td>Return address</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x2</td>
+<td>sp</td>
+<td>Stack pointer</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x3</td>
+<td>gp</td>
+<td>Global pointer</td>
+<td>-</td>
+</tr>
+<tr>
+<td>x4</td>
+<td>tp</td>
+<td>Thread pointer</td>
+<td>-</td>
+</tr>
+<tr>
+<td>x5</td>
+<td>t0</td>
+<td>Temporary/alternate link register</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x6-7</td>
+<td>t1-2</td>
+<td>Temporaries</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x8</td>
+<td>s0/fp</td>
+<td>Saved regsiter/frame pointer</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x9</td>
+<td>s1</td>
+<td>Saved register</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x10-11</td>
+<td>a0-1</td>
+<td>Function arguments/return values</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x12-17</td>
+<td>a2-7</td>
+<td>Function arguments</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x18-27</td>
+<td>s2-11</td>
+<td>Saved registers</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x28-31</td>
+<td>t3-6</td>
+<td>Temporaries</td>
+<td>Caller</td>
+</tr>
+</tbody>
+</table>
+<h4 id="x0-zero"><a href="#x0-zero" class="headerlink" title="x0 (zero)"></a>x0 (zero)</h4><p>x0內容值恆為 0，在許多的指令運算中，使用到 0值的機會很多，因此將其中一個暫存器的值直接固定為 0可帶來許多方便。</p>
+<h4 id="x1-ra"><a href="#x1-ra" class="headerlink" title="x1 (ra)"></a>x1 (ra)</h4><p>x1(ra) 使用來放置 return address，當函數(function)要結束返回時，便會返回到此暫存器中所儲存的位址，此暫存器為 Caller save，意謂者在一函數(Caller)中要呼叫另一函數(Callee)之前必須先將放置在 x1中的 Caller返回位址儲存到 stack中，因為當一呼叫其他函式，此被呼叫的函式的返回位址會同樣放到 x1(ra)中，所以此暫存器的內容值保存是由 Caller負責。</p>
+<h4 id="x2-sp"><a href="#x2-sp" class="headerlink" title="x2 (sp)"></a>x2 (sp)</h4><p>x2(sp) 用來放置 stack指標的值，可使用此暫存器對 stack做儲存載入的操作，此暫存器為 Callee save，當一被呼叫的函式想修改此暫存器的內容值前，必須先將此內容給保存下來，並在函式返回前，恢復其原本的值，換句話說，此暫存器的內容值在函式被呼叫前與此函式結束後的值應該保持一致。</p>
+<h4 id="x3-gp"><a href="#x3-gp" class="headerlink" title="x3 (gp)"></a>x3 (gp)</h4><p>x3(gp) 用來放置 global指標的值，此指標通常指向整個執行檔中的某個位址，可利用此指標來讀取資料。</p>
+<h4 id="x4-tp"><a href="#x4-tp" class="headerlink" title="x4 (tp)"></a>x4 (tp)</h4><p>x4(tp) 用來放置 thread指標的值，指向 Thread local storage。</p>
+<h4 id="x5-t0"><a href="#x5-t0" class="headerlink" title="x5 (t0)"></a>x5 (t0)</h4><p>x5(t0) 可用來當做一般的暫存器使用或者是第二個用來放置 return address的暫存器，此暫存器為 Caller save，即 Caller若在呼叫完某一函式後對此暫存器的內容有需要，必須在呼叫此函數之前將其內容值給儲存起來，避免 Callee修改到內容值。</p>
+<h4 id="x6-7-t1-2-amp-x28-31-t3-6"><a href="#x6-7-t1-2-amp-x28-31-t3-6" class="headerlink" title="x6-7 (t1-2) &amp; x28-31 (t3-6)"></a>x6-7 (t1-2) &amp; x28-31 (t3-6)</h4><p>一般的暫存器使用，為 Caller save，呼叫函式前後並不保證其暫存器內容值一致，若 Caller對其暫存器內容值有所需要，必須在呼叫函式前，先儲存起來，待呼叫函式結束後，在恢復其暫存器原本的內容值。</p>
+<h4 id="x8-s0"><a href="#x8-s0" class="headerlink" title="x8 (s0)"></a>x8 (s0)</h4><p>x8 可被當做是 Saved register或 Frame pointer使用，此暫存器為 Callee save，若在某函式內，要使用到此暫存器時，需先將其內容值給儲存起來，才可以使用，並在函式返回之前恢復原先的內容值，因爲在此函數被呼叫前後必須維持此暫存器的內容一致，在程式碼的產生上，可設定是否需要 Frame pointer去指向當前函式所使用到 stack的底部，此非為必要，所以在優化上，以 GCC為例，下 -fomit-frame-pointer選項，可將此暫存器當作 Saved register使用，增加一個可用的暫存器，提升效能。</p>
+<h4 id="x9-s1-amp-x18-27-s2-11"><a href="#x9-s1-amp-x18-27-s2-11" class="headerlink" title="x9 (s1) &amp; x18-27 (s2-11)"></a>x9 (s1) &amp; x18-27 (s2-11)</h4><p>Saved register，為 Callee save，需由 Callee負責其內容值的保存。</p>
+<h4 id="x10-x11-a0-1"><a href="#x10-x11-a0-1" class="headerlink" title="x10-x11 (a0-1)"></a>x10-x11 (a0-1)</h4><p>x10(a0) 與 x11(a1) 使用來傳遞參數或函式返回時會將其返回值放入此暫存器中，為 Caller save。</p>
+<h4 id="x12-17-a2-7"><a href="#x12-17-a2-7" class="headerlink" title="x12-17 (a2-7)"></a>x12-17 (a2-7)</h4><p>x12-17(a2-7) 使用來傳遞參數，為 Caller save。</p>
+<h3 id="RV32E-Calling-Convention"><a href="#RV32E-Calling-Convention" class="headerlink" title="RV32E Calling Convention"></a>RV32E Calling Convention</h3><p>RV32E 只有 16個 32-bit的暫存器，為 x0-x15，有 6個傳遞參數用暫存器 a0-a5，2個 Callee save暫存器 s0-s1，以及 3個 temporaries暫存器 t0-t2。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>每個暫存器皆可當做一般的暫存器使用，Calling convention 則是規定了一系列的函式與函式之間互動的慣例，例如：如何傳遞參數給函式，如何取得函式結束後回傳的返回值，哪些暫存器的內容值需在函式呼叫前後保持一致，哪些暫存器其值若在函式呼叫結束後仍有需要，則需在函式呼叫前先行儲存起來，若一函式編譯成 object file後，提供外部連結，則須嚴格遵守 Calling convention，才能與其他函式溝通。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/16df19b4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/16df19b4/" itemprop="url">
+                  RISC-V 指令集架構介紹 - RV32I
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-08 11:56:06" itemprop="dateCreated datePublished" datetime="2018-05-08T11:56:06+08:00">2018-05-08</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>RV32I為 32-bit基本整數指令集，有 32個 32-bit暫存器(x0-x31)，總共有 47道指令，以下介紹各個指令的用途與格式。</p>
+<h3 id="整數運算指令-Integer-Computational-Instructions"><a href="#整數運算指令-Integer-Computational-Instructions" class="headerlink" title="整數運算指令 (Integer Computational Instructions)"></a>整數運算指令 (Integer Computational Instructions)</h3><h4 id="整數暫存器與常數指令-Integer-Register-Immediate-Instructions"><a href="#整數暫存器與常數指令-Integer-Register-Immediate-Instructions" class="headerlink" title="整數暫存器與常數指令 (Integer Register-Immediate Instructions)"></a>整數暫存器與常數指令 (Integer Register-Immediate Instructions)</h4><p>指令為暫存器與常數之間的運算</p>
+<ul>
+<li><p><strong>ADDI</strong><br>  <em>addi rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器做加法運算，將結果寫入 rd暫存器，<em>addi rd, rs1, 0</em> 可被使用來當做 mov指令。</p>
+</li>
+<li><p><strong>SLTI</strong><br>  <em>slti rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器當做 signed number做比較，若 rs暫存器1小於常數，則將數值 1寫入 rd暫存器，反之則寫入數值 0。</p>
+</li>
+<li><p><strong>SLTIU</strong><br>  <em>sltiu rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器當作 unsigned number做比較·若 rs1暫存器小於常數，則將數值 1寫入 rd暫存器，反之則寫入數值 0。</p>
+</li>
+<li><p><strong>ANDI/ORI/XORI</strong><br>  <em>andi/ori/xori rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器做 AND/OR/XOR運算，將結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLLI/SRLI/SRAI</strong><br>  <em>slli/srli/srai rd, rs1, uimm5</em><br>  常數部分為 unsigned 5-bit，範圍為 0~31，為 shift amount，將 rs1暫存器做 shift運算，結果寫入 rd暫存器，SLLI為 logical左移，會補 0到最低位元，SRLI為 logical右移，會補 0到最高位元，SRAI為 arithmetic右移，會將原本的 sign bit複製到最高位元。</p>
+</li>
+<li><p><strong>LUI (Load upper immediate)</strong><br>  <em>lui rd, uimm20</em><br>  將 unsigned 20-bit放到 rd暫存器的最高 20-bit，並將剩餘的 12-bit補 0，此指令可與 ADDI搭配，一起組合出完整 32-bit的數值。</p>
+</li>
+<li><p><strong>AUIPC(add upper immediate to pc)</strong><br>  <em>auipc rd, uimm20</em><br>  unsigned 20-bit放到最高 20位元，剩餘 12位元補0，將此數值與 pc相加寫入 rd暫存器。</p>
+</li>
+</ul>
+<h4 id="整數暫存器與暫存器指令-Integer-Register-Register-Insructions"><a href="#整數暫存器與暫存器指令-Integer-Register-Register-Insructions" class="headerlink" title="整數暫存器與暫存器指令 (Integer Register-Register Insructions)"></a>整數暫存器與暫存器指令 (Integer Register-Register Insructions)</h4><p>指令為暫存器與暫存器之間的運算</p>
+<ul>
+<li><p><strong>ADD/SUB</strong><br>  <em>add/sub rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做加法/減法運算，將結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLT/SLTU</strong><br>  <em>slt/sltu rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器當做 singed/unsigned number做比較，若 rs1暫存器小於 rs2暫存器，則將數值 1寫入 rd暫存器，反之則寫入數值 0。</p>
+</li>
+<li><p><strong>AND/OR/XOR</strong><br>  <em>and/or/xor rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做 AND/OR/XOR運算，將結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLL/SRL/SRA</strong><br>  <em>sll/srl/sra rd, rs1,, rs2</em><br>  將 rs1暫存器做 shift運算，結果寫入 rd暫存器，rs2暫存器的最低 5-bit為 shift amount。</p>
+</li>
+</ul>
+<h4 id="NOP-指令"><a href="#NOP-指令" class="headerlink" title="NOP 指令"></a>NOP 指令</h4><p>NOP 指令即為不改變任何暫存器狀態，除了 pc以外。NOP 指令會被編碼成 <em>addi x0, x0, 0</em> 替代。</p>
+<h3 id="控制轉移指令-Control-Transfer-Instructions"><a href="#控制轉移指令-Control-Transfer-Instructions" class="headerlink" title="控制轉移指令 (Control Transfer Instructions)"></a>控制轉移指令 (Control Transfer Instructions)</h3><p>分別有兩種控制轉移指令，無條件跳躍(Unconditional jumps)與條件分支(Conditional branches)</p>
+<h4 id="無條件跳躍-Unconditional-Jumps"><a href="#無條件跳躍-Unconditional-Jumps" class="headerlink" title="無條件跳躍 (Unconditional Jumps)"></a>無條件跳躍 (Unconditional Jumps)</h4><ul>
+<li><p><strong>JAL (jump and link)</strong><br> <em>jal rd, simm21</em><br> 常數部分為 sign-extended 21-bit，要注意的是此常數必須為 2的倍數，即最低位元為 0，因為此道指令編碼的常數位元數只有 20位元，所以只會將 signed 21-bit的最高 20位元放入指令編碼中，跳躍範圍為 -+1MiB，同時也會將下一道指令的位址 pc+4寫入 rd暫存器中，在標準的 calling convention中，rd暫存器會使用 x1。如果只是單純的 jump，並非是呼叫函示需要儲存其返回位址 pc+4，可用 <em>jal x0, simm21</em> 取代。</p>
+</li>
+<li><p><strong>JALR (jump and link register)</strong><br>  <em>jalr rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，跳躍的位址為 rs暫存器加上 sign-extended 12-bit，並把下一道指令的位址 pc+4寫入 rd暫存器中。</p>
+</li>
+</ul>
+<h4 id="條件跳躍-Conditional-Branches"><a href="#條件跳躍-Conditional-Branches" class="headerlink" title="條件跳躍 (Conditional Branches)"></a>條件跳躍 (Conditional Branches)</h4><ul>
+<li><strong>BEQ/BNE/BLT/BLTU/BGE/BGEU</strong><br>  <em>beq/bne/blt/bltu/bge/bgeu rs1, rs2, simm13</em><br>  常數部分為 sign-extended 13-bit，要注意的是此常數必須為 2的倍數，即最低位元為 0，因為此道指令編碼的常數位元數只有 12位元，所以只會將 signed 13-bit的最高 12位元放入指令編碼中，跳躍範圍為 -+4Kib，BEQ/BNE將 rs1暫存器與 rs2暫存器做相同與不同的比較，若成立則跳躍，BLT/BLTU將 rs1暫存器與 rs2暫存器分別做 signed/unsigned小於比較，若成立則跳躍，BGE/BGEU將 rs1暫存器與 rs2暫存器分別做 signed/unsigned大於等於比較，若成立則跳躍，跳躍的位址則為 pc加上 sign-extended 13-bit。</li>
+</ul>
+<h3 id="載入與儲存指令-Load-and-Store-Instructions"><a href="#載入與儲存指令-Load-and-Store-Instructions" class="headerlink" title="載入與儲存指令 (Load and Store Instructions)"></a>載入與儲存指令 (Load and Store Instructions)</h3><p>RV32I 必須使用載入與儲存指令去存取記憶體，前面的運算指令只能夠對暫存器做操作。</p>
+<ul>
+<li><p><strong>LW/LH/LHU/LB/LBU</strong><br>  <em>lw/lh/lhu/lb/lbu rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，載入位址則為 rs1暫存器加上 sign-extended 12-bit，LW為載入 32-bit資料寫入 rd暫存器，LH/LHU為載入 16-bit資料分別做 unsigned/signed extension成 32-bit後寫入 rd暫存器，LB/LBU為載入 8-bit資料分別做 unsigned/signed extension成 32-bit後寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SW/SH/SB</strong><br>  <em>sw/sh/sb rs2, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，儲存位址則為 rs1暫存器加上 sign-extended 12-bit，SW為將 rs2暫存器完整 32-bit資料寫入記憶體，SH為將 rs2暫存器最低 16-bit資料寫入記憶體，SB為將 rs2暫存器最低 8-bit資料寫入記憶體。</p>
+</li>
+</ul>
+<h3 id="Memory-model"><a href="#Memory-model" class="headerlink" title="Memory model"></a>Memory model</h3><p>定義了一組 FENCE指令，用來做不同 thread之間，記憶體的同步。</p>
+<h3 id="控制與狀態暫存器指令-Control-and-Status-Register-Instructions"><a href="#控制與狀態暫存器指令-Control-and-Status-Register-Instructions" class="headerlink" title="控制與狀態暫存器指令 (Control and Status Register Instructions)"></a>控制與狀態暫存器指令 (Control and Status Register Instructions)</h3><h4 id="CSR-Instructions"><a href="#CSR-Instructions" class="headerlink" title="CSR Instructions"></a>CSR Instructions</h4><ul>
+<li><strong>CSRRW/CSRRS/CSRRC/CSRRWI/CSRRSI/CSRRCI</strong><br>  定義了一組 CSR指令，可用來讀取寫入 CSR。</li>
+</ul>
+<h4 id="Timers-and-Counters"><a href="#Timers-and-Counters" class="headerlink" title="Timers and Counters"></a>Timers and Counters</h4><ul>
+<li><p><strong>RDCYCLE[H]</strong><br>  rdcycle用來讀取最低 31-bit cycle CSR，rdcycleh用來讀取最高 31-bit cycle數。</p>
+</li>
+<li><p><strong>RDTIME[H]</strong><br>  用來讀取 time CSR。</p>
+</li>
+<li><p><strong>RDINSTRET</strong><br>  用來讀取 instret CSR。</p>
+</li>
+</ul>
+<h3 id="Environment-Call-and-Breakpoints"><a href="#Environment-Call-and-Breakpoints" class="headerlink" title="Environment Call and Breakpoints"></a>Environment Call and Breakpoints</h3><ul>
+<li><p><strong>ECALL</strong><br>  使用來呼叫 system call。</p>
+</li>
+<li><p><strong>EBREAK</strong><br>  Debugger 用來切換進 Debugging 環境。</p>
+</li>
+</ul>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/e9206a47/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/e9206a47/" itemprop="url">
+                  C語言: ++*p, *p++和 *++p的不同
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-07 10:37:54" itemprop="dateCreated datePublished" datetime="2018-05-07T10:37:54+08:00">2018-05-07</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>介紹一下在 C語言中 ++*p, *p++和 *++p的不同。</p>
+<h4 id="p"><a href="#p" class="headerlink" title="++*p"></a>++*p</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[] = &#123; <span class="number">10</span>, <span class="number">20</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> *p = <span class="built_in">array</span>;</span><br><span class="line">  <span class="keyword">int</span> v = ++*p;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"v = %d, array[0] = %d, array[1] = %d, *p = %d\n"</span>, v, <span class="built_in">array</span>[<span class="number">0</span>], <span class="built_in">array</span>[<span class="number">1</span>], *p);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="p-1"><a href="#p-1" class="headerlink" title="*p++"></a>*p++</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[] = &#123; <span class="number">10</span>, <span class="number">20</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> *p = <span class="built_in">array</span>;</span><br><span class="line">  <span class="keyword">int</span> v = *p++;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"v = %d, array[0] = %d, array[1] = %d, *p = %d\n"</span>, v, <span class="built_in">array</span>[<span class="number">0</span>], <span class="built_in">array</span>[<span class="number">1</span>], *p);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="p-2"><a href="#p-2" class="headerlink" title="*++p"></a>*++p</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[] = &#123; <span class="number">10</span>, <span class="number">20</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> *p = <span class="built_in">array</span>;</span><br><span class="line">  <span class="keyword">int</span> v = *++p;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"v = %d, array[0] = %d, array[1] = %d, *p = %d\n"</span>, v, <span class="built_in">array</span>[<span class="number">0</span>], <span class="built_in">array</span>[<span class="number">1</span>], *p);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>++*p</strong>、<strong>*p++</strong>和 <strong>*++p</strong>是由 postfix ++(++在後)、prefix ++(++在前)和 *(deference)運算子組合而成，其運算優先權與關聯性為:</p>
+<ol>
+<li>prefix ++與 *的運算優先權相同，關聯性為從右到左。</li>
+<li>postfix ++的運算優先權高於 prefix ++與 *，關聯性為從左到右。</li>
+</ol>
+<h4 id="p-3"><a href="#p-3" class="headerlink" title="++*p"></a>++*p</h4><p>因 prefix ++與 *的運算優先權相同，因此從右到左，可視為是 ++(*p)，將指標 p取值後加 1，結果為 v = 11, array[0] = 11, array[1] = 20, *p = 11。</p>
+<h4 id="p-4"><a href="#p-4" class="headerlink" title="*p++"></a>*p++</h4><p>因 postfix ++的運算優先權高於 *，可視為是 *(p++)，將指標 p加 1，因為是 postfix，所以取的值為指標 p加 1之前所指向的值，結果為 v = 10, array[0] = 10, array[1] = 20, *p = 20。</p>
+<h4 id="p-5"><a href="#p-5" class="headerlink" title="*++p"></a>*++p</h4><p>因 prefix ++與 *的運算優先權相同，因此從右到左，可視為是 *(++p)，將指標 p加 1後取值，結果為 v = 20, array[0] = 10, array[1] = 20, *p = 20。</p>
+<h4 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>遇到 postfix ++的情況，可視為在執行完 <strong>;</strong> 之後，才會執行 ++的運算。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="http://www.difranco.net/compsci/C_Operator_Precedence_Table.htm" target="_blank" rel="noopener">C Operator Precedence Table</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jim Lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

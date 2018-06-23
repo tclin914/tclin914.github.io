@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="RV32I為 32-bit基本整數指令集，有 32個 32-bit暫存器(x0-x31)，總共有 47道指令，以下介紹各個指令的用途與格式。 整數運算指令 (Integer Computational Instructions)整數暫存器與常數指令 (Integer Register-Immediate Instructions)指令為暫存器與常數之間的運算  ADDI  addi rd, rs1">
+<meta name="keywords" content="RISC-V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RISC-V 指令集架構介紹 - RV32I">
+<meta property="og:url" content="https://tclin914.github.io/16df19b4/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="RV32I為 32-bit基本整數指令集，有 32個 32-bit暫存器(x0-x31)，總共有 47道指令，以下介紹各個指令的用途與格式。 整數運算指令 (Integer Computational Instructions)整數暫存器與常數指令 (Integer Register-Immediate Instructions)指令為暫存器與常數之間的運算  ADDI  addi rd, rs1">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:updated_time" content="2018-05-08T03:56:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RISC-V 指令集架構介紹 - RV32I">
+<meta name="twitter:description" content="RV32I為 32-bit基本整數指令集，有 32個 32-bit暫存器(x0-x31)，總共有 47道指令，以下介紹各個指令的用途與格式。 整數運算指令 (Integer Computational Instructions)整數暫存器與常數指令 (Integer Register-Immediate Instructions)指令為暫存器與常數之間的運算  ADDI  addi rd, rs1">
+
+
+
+
+
+
+  <link rel="canonical" href="https://tclin914.github.io/16df19b4/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RISC-V 指令集架構介紹 - RV32I | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jim's Dev Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首頁</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />關於</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />標籤</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分類</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />歸檔</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/16df19b4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RISC-V 指令集架構介紹 - RV32I
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-08 11:56:06" itemprop="dateCreated datePublished" datetime="2018-05-08T11:56:06+08:00">2018-05-08</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>RV32I為 32-bit基本整數指令集，有 32個 32-bit暫存器(x0-x31)，總共有 47道指令，以下介紹各個指令的用途與格式。</p>
+<h3 id="整數運算指令-Integer-Computational-Instructions"><a href="#整數運算指令-Integer-Computational-Instructions" class="headerlink" title="整數運算指令 (Integer Computational Instructions)"></a>整數運算指令 (Integer Computational Instructions)</h3><h4 id="整數暫存器與常數指令-Integer-Register-Immediate-Instructions"><a href="#整數暫存器與常數指令-Integer-Register-Immediate-Instructions" class="headerlink" title="整數暫存器與常數指令 (Integer Register-Immediate Instructions)"></a>整數暫存器與常數指令 (Integer Register-Immediate Instructions)</h4><p>指令為暫存器與常數之間的運算</p>
+<ul>
+<li><p><strong>ADDI</strong><br>  <em>addi rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器做加法運算，將結果寫入 rd暫存器，<em>addi rd, rs1, 0</em> 可被使用來當做 mov指令。</p>
+</li>
+<li><p><strong>SLTI</strong><br>  <em>slti rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器當做 signed number做比較，若 rs暫存器1小於常數，則將數值 1寫入 rd暫存器，反之則寫入數值 0。</p>
+</li>
+<li><p><strong>SLTIU</strong><br>  <em>sltiu rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器當作 unsigned number做比較·若 rs1暫存器小於常數，則將數值 1寫入 rd暫存器，反之則寫入數值 0。</p>
+</li>
+<li><p><strong>ANDI/ORI/XORI</strong><br>  <em>andi/ori/xori rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，會將 12-bit做 sign-extension成 32-bit後，再與 rs1暫存器做 AND/OR/XOR運算，將結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLLI/SRLI/SRAI</strong><br>  <em>slli/srli/srai rd, rs1, uimm5</em><br>  常數部分為 unsigned 5-bit，範圍為 0~31，為 shift amount，將 rs1暫存器做 shift運算，結果寫入 rd暫存器，SLLI為 logical左移，會補 0到最低位元，SRLI為 logical右移，會補 0到最高位元，SRAI為 arithmetic右移，會將原本的 sign bit複製到最高位元。</p>
+</li>
+<li><p><strong>LUI (Load upper immediate)</strong><br>  <em>lui rd, uimm20</em><br>  將 unsigned 20-bit放到 rd暫存器的最高 20-bit，並將剩餘的 12-bit補 0，此指令可與 ADDI搭配，一起組合出完整 32-bit的數值。</p>
+</li>
+<li><p><strong>AUIPC(add upper immediate to pc)</strong><br>  <em>auipc rd, uimm20</em><br>  unsigned 20-bit放到最高 20位元，剩餘 12位元補0，將此數值與 pc相加寫入 rd暫存器。</p>
+</li>
+</ul>
+<h4 id="整數暫存器與暫存器指令-Integer-Register-Register-Insructions"><a href="#整數暫存器與暫存器指令-Integer-Register-Register-Insructions" class="headerlink" title="整數暫存器與暫存器指令 (Integer Register-Register Insructions)"></a>整數暫存器與暫存器指令 (Integer Register-Register Insructions)</h4><p>指令為暫存器與暫存器之間的運算</p>
+<ul>
+<li><p><strong>ADD/SUB</strong><br>  <em>add/sub rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做加法/減法運算，將結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLT/SLTU</strong><br>  <em>slt/sltu rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器當做 singed/unsigned number做比較，若 rs1暫存器小於 rs2暫存器，則將數值 1寫入 rd暫存器，反之則寫入數值 0。</p>
+</li>
+<li><p><strong>AND/OR/XOR</strong><br>  <em>and/or/xor rd, rs1, rs2</em><br>  將 rs1暫存器與 rs2暫存器做 AND/OR/XOR運算，將結果寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SLL/SRL/SRA</strong><br>  <em>sll/srl/sra rd, rs1,, rs2</em><br>  將 rs1暫存器做 shift運算，結果寫入 rd暫存器，rs2暫存器的最低 5-bit為 shift amount。</p>
+</li>
+</ul>
+<h4 id="NOP-指令"><a href="#NOP-指令" class="headerlink" title="NOP 指令"></a>NOP 指令</h4><p>NOP 指令即為不改變任何暫存器狀態，除了 pc以外。NOP 指令會被編碼成 <em>addi x0, x0, 0</em> 替代。</p>
+<h3 id="控制轉移指令-Control-Transfer-Instructions"><a href="#控制轉移指令-Control-Transfer-Instructions" class="headerlink" title="控制轉移指令 (Control Transfer Instructions)"></a>控制轉移指令 (Control Transfer Instructions)</h3><p>分別有兩種控制轉移指令，無條件跳躍(Unconditional jumps)與條件分支(Conditional branches)</p>
+<h4 id="無條件跳躍-Unconditional-Jumps"><a href="#無條件跳躍-Unconditional-Jumps" class="headerlink" title="無條件跳躍 (Unconditional Jumps)"></a>無條件跳躍 (Unconditional Jumps)</h4><ul>
+<li><p><strong>JAL (jump and link)</strong><br> <em>jal rd, simm21</em><br> 常數部分為 sign-extended 21-bit，要注意的是此常數必須為 2的倍數，即最低位元為 0，因為此道指令編碼的常數位元數只有 20位元，所以只會將 signed 21-bit的最高 20位元放入指令編碼中，跳躍範圍為 -+1MiB，同時也會將下一道指令的位址 pc+4寫入 rd暫存器中，在標準的 calling convention中，rd暫存器會使用 x1。如果只是單純的 jump，並非是呼叫函示需要儲存其返回位址 pc+4，可用 <em>jal x0, simm21</em> 取代。</p>
+</li>
+<li><p><strong>JALR (jump and link register)</strong><br>  <em>jalr rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，跳躍的位址為 rs暫存器加上 sign-extended 12-bit，並把下一道指令的位址 pc+4寫入 rd暫存器中。</p>
+</li>
+</ul>
+<h4 id="條件跳躍-Conditional-Branches"><a href="#條件跳躍-Conditional-Branches" class="headerlink" title="條件跳躍 (Conditional Branches)"></a>條件跳躍 (Conditional Branches)</h4><ul>
+<li><strong>BEQ/BNE/BLT/BLTU/BGE/BGEU</strong><br>  <em>beq/bne/blt/bltu/bge/bgeu rs1, rs2, simm13</em><br>  常數部分為 sign-extended 13-bit，要注意的是此常數必須為 2的倍數，即最低位元為 0，因為此道指令編碼的常數位元數只有 12位元，所以只會將 signed 13-bit的最高 12位元放入指令編碼中，跳躍範圍為 -+4Kib，BEQ/BNE將 rs1暫存器與 rs2暫存器做相同與不同的比較，若成立則跳躍，BLT/BLTU將 rs1暫存器與 rs2暫存器分別做 signed/unsigned小於比較，若成立則跳躍，BGE/BGEU將 rs1暫存器與 rs2暫存器分別做 signed/unsigned大於等於比較，若成立則跳躍，跳躍的位址則為 pc加上 sign-extended 13-bit。</li>
+</ul>
+<h3 id="載入與儲存指令-Load-and-Store-Instructions"><a href="#載入與儲存指令-Load-and-Store-Instructions" class="headerlink" title="載入與儲存指令 (Load and Store Instructions)"></a>載入與儲存指令 (Load and Store Instructions)</h3><p>RV32I 必須使用載入與儲存指令去存取記憶體，前面的運算指令只能夠對暫存器做操作。</p>
+<ul>
+<li><p><strong>LW/LH/LHU/LB/LBU</strong><br>  <em>lw/lh/lhu/lb/lbu rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，載入位址則為 rs1暫存器加上 sign-extended 12-bit，LW為載入 32-bit資料寫入 rd暫存器，LH/LHU為載入 16-bit資料分別做 unsigned/signed extension成 32-bit後寫入 rd暫存器，LB/LBU為載入 8-bit資料分別做 unsigned/signed extension成 32-bit後寫入 rd暫存器。</p>
+</li>
+<li><p><strong>SW/SH/SB</strong><br>  <em>sw/sh/sb rs2, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，儲存位址則為 rs1暫存器加上 sign-extended 12-bit，SW為將 rs2暫存器完整 32-bit資料寫入記憶體，SH為將 rs2暫存器最低 16-bit資料寫入記憶體，SB為將 rs2暫存器最低 8-bit資料寫入記憶體。</p>
+</li>
+</ul>
+<h3 id="Memory-model"><a href="#Memory-model" class="headerlink" title="Memory model"></a>Memory model</h3><p>定義了一組 FENCE指令，用來做不同 thread之間，記憶體的同步。</p>
+<h3 id="控制與狀態暫存器指令-Control-and-Status-Register-Instructions"><a href="#控制與狀態暫存器指令-Control-and-Status-Register-Instructions" class="headerlink" title="控制與狀態暫存器指令 (Control and Status Register Instructions)"></a>控制與狀態暫存器指令 (Control and Status Register Instructions)</h3><h4 id="CSR-Instructions"><a href="#CSR-Instructions" class="headerlink" title="CSR Instructions"></a>CSR Instructions</h4><ul>
+<li><strong>CSRRW/CSRRS/CSRRC/CSRRWI/CSRRSI/CSRRCI</strong><br>  定義了一組 CSR指令，可用來讀取寫入 CSR。</li>
+</ul>
+<h4 id="Timers-and-Counters"><a href="#Timers-and-Counters" class="headerlink" title="Timers and Counters"></a>Timers and Counters</h4><ul>
+<li><p><strong>RDCYCLE[H]</strong><br>  rdcycle用來讀取最低 31-bit cycle CSR，rdcycleh用來讀取最高 31-bit cycle數。</p>
+</li>
+<li><p><strong>RDTIME[H]</strong><br>  用來讀取 time CSR。</p>
+</li>
+<li><p><strong>RDINSTRET</strong><br>  用來讀取 instret CSR。</p>
+</li>
+</ul>
+<h3 id="Environment-Call-and-Breakpoints"><a href="#Environment-Call-and-Breakpoints" class="headerlink" title="Environment Call and Breakpoints"></a>Environment Call and Breakpoints</h3><ul>
+<li><p><strong>ECALL</strong><br>  使用來呼叫 system call。</p>
+</li>
+<li><p><strong>EBREAK</strong><br>  Debugger 用來切換進 Debugging 環境。</p>
+</li>
+</ul>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RISC-V/" rel="tag"># RISC-V</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/e9206a47/" rel="next" title="C語言: ++*p, *p++和 *++p的不同">
+                <i class="fa fa-chevron-left"></i> C語言: ++*p, *p++和 *++p的不同
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/77838749/" rel="prev" title="RISC-V 指令集架構介紹 - Integer Calling convention">
+                RISC-V 指令集架構介紹 - Integer Calling convention <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jim Lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#整數運算指令-Integer-Computational-Instructions"><span class="nav-number">1.</span> <span class="nav-text">整數運算指令 (Integer Computational Instructions)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整數暫存器與常數指令-Integer-Register-Immediate-Instructions"><span class="nav-number">1.1.</span> <span class="nav-text">整數暫存器與常數指令 (Integer Register-Immediate Instructions)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#整數暫存器與暫存器指令-Integer-Register-Register-Insructions"><span class="nav-number">1.2.</span> <span class="nav-text">整數暫存器與暫存器指令 (Integer Register-Register Insructions)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NOP-指令"><span class="nav-number">1.3.</span> <span class="nav-text">NOP 指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制轉移指令-Control-Transfer-Instructions"><span class="nav-number">2.</span> <span class="nav-text">控制轉移指令 (Control Transfer Instructions)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#無條件跳躍-Unconditional-Jumps"><span class="nav-number">2.1.</span> <span class="nav-text">無條件跳躍 (Unconditional Jumps)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#條件跳躍-Conditional-Branches"><span class="nav-number">2.2.</span> <span class="nav-text">條件跳躍 (Conditional Branches)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#載入與儲存指令-Load-and-Store-Instructions"><span class="nav-number">3.</span> <span class="nav-text">載入與儲存指令 (Load and Store Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory-model"><span class="nav-number">4.</span> <span class="nav-text">Memory model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制與狀態暫存器指令-Control-and-Status-Register-Instructions"><span class="nav-number">5.</span> <span class="nav-text">控制與狀態暫存器指令 (Control and Status Register Instructions)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CSR-Instructions"><span class="nav-number">5.1.</span> <span class="nav-text">CSR Instructions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Timers-and-Counters"><span class="nav-number">5.2.</span> <span class="nav-text">Timers and Counters</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Environment-Call-and-Breakpoints"><span class="nav-number">6.</span> <span class="nav-text">Environment Call and Breakpoints</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">6.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

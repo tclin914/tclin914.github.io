@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="F standard extension為單精度浮點數(single-precision floating-point)指令擴充，增加了 32個浮點數暫存器(f0-f31)，長度為 32-bit，以及一個浮點數控制與狀態暫存器(fcsr)，與 IEEE 754-2008相容。 下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器">
+<meta name="keywords" content="RISC-V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RISC-V 指令集架構介紹 - F Standard Extension">
+<meta property="og:url" content="https://tclin914.github.io/3d45634e/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="F standard extension為單精度浮點數(single-precision floating-point)指令擴充，增加了 32個浮點數暫存器(f0-f31)，長度為 32-bit，以及一個浮點數控制與狀態暫存器(fcsr)，與 IEEE 754-2008相容。 下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器">
+<meta property="og:locale" content="zh-TW">
+<meta property="og:image" content="https://tclin914.github.io/3d45634e/fcsr.png">
+<meta property="og:image" content="https://tclin914.github.io/3d45634e/rounding_mode_encoding.png">
+<meta property="og:image" content="https://tclin914.github.io/3d45634e/exception_flag_encoding.png">
+<meta property="og:image" content="https://tclin914.github.io/3d45634e/fclass.png">
+<meta property="og:updated_time" content="2018-06-23T09:05:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RISC-V 指令集架構介紹 - F Standard Extension">
+<meta name="twitter:description" content="F standard extension為單精度浮點數(single-precision floating-point)指令擴充，增加了 32個浮點數暫存器(f0-f31)，長度為 32-bit，以及一個浮點數控制與狀態暫存器(fcsr)，與 IEEE 754-2008相容。 下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器">
+<meta name="twitter:image" content="https://tclin914.github.io/3d45634e/fcsr.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://tclin914.github.io/3d45634e/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RISC-V 指令集架構介紹 - F Standard Extension | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jim's Dev Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切換導航欄">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首頁</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />關於</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />標籤</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分類</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />歸檔</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/3d45634e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RISC-V 指令集架構介紹 - F Standard Extension
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-06-23 17:05:03" itemprop="dateCreated datePublished" datetime="2018-06-23T17:05:03+08:00">2018-06-23</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>F standard extension為單精度浮點數(single-precision floating-point)指令擴充，增加了 32個浮點數暫存器(f0-f31)，長度為 32-bit，以及一個浮點數控制與狀態暫存器(fcsr)，與 IEEE 754-2008相容。</p>
+<p>下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器則為 f0-f31。</p>
+<h3 id="浮點數控制與狀態暫存器-Floating-Point-Control-and-Status-Register"><a href="#浮點數控制與狀態暫存器-Floating-Point-Control-and-Status-Register" class="headerlink" title="浮點數控制與狀態暫存器 (Floating-Point Control and Status Register)"></a>浮點數控制與狀態暫存器 (Floating-Point Control and Status Register)</h3><img src="/3d45634e/fcsr.png">
+<p>浮點數指令可設定成動態的去參照目前 fcsr中的 Rounding Mode bits來決定如何 rounding，fcsr的 Rounding Mode編碼則為下方表格。</p>
+<img src="/3d45634e/rounding_mode_encoding.png">
+<p>若發生 floating point exception，則會去設定相對應的 fcsr exception flags，下方表格為各個 flag與其 floating point exception的對照。</p>
+<img src="/3d45634e/exception_flag_encoding.png">
+<h3 id="單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions"><a href="#單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions" class="headerlink" title="單精度載入與儲存指令 (Single-Precision Load and Store Instructions)"></a>單精度載入與儲存指令 (Single-Precision Load and Store Instructions)</h3><ul>
+<li><p><strong>FLW</strong><br>  <em>flw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，載入位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 single-precision浮點數值從記憶體中載入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FSW</strong><br>  <em>fsw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，儲存位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 rs1浮點數暫存器的 single-precision浮點數值寫入記憶體。</p>
+</li>
+</ul>
+<h3 id="單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions"><a href="#單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions" class="headerlink" title="單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)"></a>單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)</h3><ul>
+<li><p><strong>FADD.S/FSUB.S</strong><br>  <em>fadd.s/fsub.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做加法/減法運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FMUL.S/FDIV.S</strong><br>  <em>fmul.s/fdiv.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做乘法/除法運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FMIN.S/FMAX.S</strong><br>  <em>fmin.s/fmax.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做最大值/最小值比較，將最大值/最小值寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FSQRT.S</strong><br>  <em>fsqrt.s rd, rs1</em><br>  將 rs1浮點數暫存器做取平方根運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>F[N]MADD/F[N]MSUB</strong><br>  <em>f[n]madd/f[n]msub rd, rs1, rs2, rs3</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做乘法運算後，再與 rs3浮點數暫存器做加法/乘法運算，結果寫入 rd浮點數暫存器，n版本則為做完乘法運算後取 negate，為乘法與加法指令一次完成，中間並沒有經過 rounding，所以精準度上會比一般乘法指令加上加法指令還高。</p>
+</li>
+</ul>
+<h3 id="單精度浮點數轉換與移動指令-Single-precision-Floating-Point-Conversion-and-Move-Instructions"><a href="#單精度浮點數轉換與移動指令-Single-precision-Floating-Point-Conversion-and-Move-Instructions" class="headerlink" title="單精度浮點數轉換與移動指令 (Single-precision Floating-Point Conversion and Move Instructions)"></a>單精度浮點數轉換與移動指令 (Single-precision Floating-Point Conversion and Move Instructions)</h3><p>將浮點數轉換為整數或整數轉換為浮點數指令，會根據指令中的 rm field來決定轉換的 rounding mode。</p>
+<ul>
+<li><p><strong>FCVT.W.S/FCVT.L.S</strong><br>  <em>fcvt.w.s/fcvt.l.s rd, rs1</em><br>  將 rs1浮點數暫存器中的浮點數轉換為 signed 32-bit/64-bit，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.S.W/FCVT.S.L</strong><br>  <em>fcvt.s.w/fcvt.s.l rd, rs1</em><br>  將 rs1一般暫存器中的signed 整數轉換為浮點數，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.WU.S/FCVT.LU.S</strong><br>  <em>fcvt.wu.s/fcvt.lu.s rd, rs1</em><br>  將 rs1浮點數暫存器中的浮點數轉換為 unsigned 32-bit/64-bit，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.S.WU/FCVT.S.LU</strong><br>  <em>fcvt.s.wu/fcvt.s.lu rd, rs1</em><br>  將 rs1一般暫存器中的unsigned 整數轉換為浮點數，結果寫入 rd一般暫存器。</p>
+</li>
+</ul>
+<p>sign-injection instructions</p>
+<ul>
+<li><p><strong>FSGNJ.S</strong><br>  <em>fsgnj.s rd, rs1, rs2</em><br>  rd浮點數暫存器中的數值來自 rs1浮點數暫存器，sign bit則為 rs2浮點數暫存器的 sign bit。</p>
+</li>
+<li><p><strong>FSGNJN.S</strong><br>  <em>fsgnjn.s rd, rs1, rs2</em><br>  rd浮點數暫存器中的數值來自 rs1浮點數暫存器，sign bit則為 rs2浮點數暫存器的 sign bit的相反。</p>
+</li>
+<li><p><strong>FSGNJX.S</strong><br>  <em>fsgnjx.s rd, rs1, rs2</em><br>  rd浮點數暫存器的數值來自 rs1浮點數暫存器，sign bit則為 rs1浮點數暫存器的 sign bit與 rs2浮點數暫存器的 sign bit做 xor運算。</p>
+</li>
+</ul>
+<p>單純 floating point與 integer之間的 move指令，與上面不同的是，只做 bit的移動，並不做浮點數與整數之間的轉換。</p>
+<ul>
+<li><p><strong>FMV.X.W</strong><br>  <em>fmv.x.w rd, rs1</em><br>  將 rs1浮點數暫存器的 32-bit數值寫入 rd一般暫存器中，若在 RV64，則用 sign bit填滿最高 32-bit。</p>
+</li>
+<li><p><strong>FMV.W.X</strong><br>  <em>fmv.w.x rd, rs1</em><br>  將 rs1一般暫存器的最低 32-bit(已用IEEE 754-2008編碼好)數值寫入 rd浮點數暫存器。</p>
+</li>
+</ul>
+<h3 id="單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions"><a href="#單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions" class="headerlink" title="單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)"></a>單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)</h3><ul>
+<li><strong>FEQ.S/FLT.S/FLE.S</strong><br>  <em>feq.s/flt.s/fle.s rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做 eq/lt/le比較，結果寫入 rd一般暫存器。</li>
+</ul>
+<h3 id="單精度浮點數分類指令-Single-Precision-Floating-Point-Classify-Instruction"><a href="#單精度浮點數分類指令-Single-Precision-Floating-Point-Classify-Instruction" class="headerlink" title="單精度浮點數分類指令 (Single-Precision Floating-Point Classify Instruction)"></a>單精度浮點數分類指令 (Single-Precision Floating-Point Classify Instruction)</h3><ul>
+<li><strong>FCLASS.S</strong><br>  <em>fclass.s rd, rs1</em><br>  根據下表分類 rs1浮點數暫存器的浮點數值，結果寫入 rd一般暫存器。</li>
+</ul>
+<img src="/3d45634e/fclass.png">
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RISC-V/" rel="tag"># RISC-V</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2723020e/" rel="next" title="更改所有目錄檔案權限方法">
+                <i class="fa fa-chevron-left"></i> 更改所有目錄檔案權限方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jim Lin</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">分類</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">標籤</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#浮點數控制與狀態暫存器-Floating-Point-Control-and-Status-Register"><span class="nav-number">1.</span> <span class="nav-text">浮點數控制與狀態暫存器 (Floating-Point Control and Status Register)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions"><span class="nav-number">2.</span> <span class="nav-text">單精度載入與儲存指令 (Single-Precision Load and Store Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions"><span class="nav-number">3.</span> <span class="nav-text">單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#單精度浮點數轉換與移動指令-Single-precision-Floating-Point-Conversion-and-Move-Instructions"><span class="nav-number">4.</span> <span class="nav-text">單精度浮點數轉換與移動指令 (Single-precision Floating-Point Conversion and Move Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions"><span class="nav-number">5.</span> <span class="nav-text">單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#單精度浮點數分類指令-Single-Precision-Floating-Point-Classify-Instruction"><span class="nav-number">6.</span> <span class="nav-text">單精度浮點數分類指令 (Single-Precision Floating-Point Classify Instruction)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">6.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
