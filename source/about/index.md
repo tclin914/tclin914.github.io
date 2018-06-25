@@ -61,7 +61,13 @@ Github: [https://github.com/tclin914](https://github.com/tclin914)
 1. 程式設計師的自我修養-連結. 載入. 程式庫
 2. Linkers & Loaders
 3. 系統程式 System Software
+4. Linux二進制分析
+5. BINARY HACKS
 
 ### Data Structures
 
 1. Fundamentals Of Data Structures In C++, 2nd Edition
+
+### Algorithm
+
+1. 演算法圖鑑
