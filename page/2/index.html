@@ -303,6 +303,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/e9206a47/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jim Lin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/e9206a47/" itemprop="url">
+                  C語言: ++*p, *p++和 *++p的不同
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+
+              
+                
+              
+
+              <time title="創建時間：2018-05-07 10:37:54" itemprop="dateCreated datePublished" datetime="2018-05-07T10:37:54+08:00">2018-05-07</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分類於</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/e9206a47/#comments" itemprop="discussionUrl">
+                
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="e9206a47/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>介紹一下在 C語言中 ++*p, *p++和 *++p的不同。</p>
+<h4 id="p"><a href="#p" class="headerlink" title="++*p"></a>++*p</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[] = &#123; <span class="number">10</span>, <span class="number">20</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> *p = <span class="built_in">array</span>;</span><br><span class="line">  <span class="keyword">int</span> v = ++*p;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"v = %d, array[0] = %d, array[1] = %d, *p = %d\n"</span>, v, <span class="built_in">array</span>[<span class="number">0</span>], <span class="built_in">array</span>[<span class="number">1</span>], *p);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="p-1"><a href="#p-1" class="headerlink" title="*p++"></a>*p++</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[] = &#123; <span class="number">10</span>, <span class="number">20</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> *p = <span class="built_in">array</span>;</span><br><span class="line">  <span class="keyword">int</span> v = *p++;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"v = %d, array[0] = %d, array[1] = %d, *p = %d\n"</span>, v, <span class="built_in">array</span>[<span class="number">0</span>], <span class="built_in">array</span>[<span class="number">1</span>], *p);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="p-2"><a href="#p-2" class="headerlink" title="*++p"></a>*++p</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="built_in">array</span>[] = &#123; <span class="number">10</span>, <span class="number">20</span>&#125;;</span><br><span class="line">  <span class="keyword">int</span> *p = <span class="built_in">array</span>;</span><br><span class="line">  <span class="keyword">int</span> v = *++p;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"v = %d, array[0] = %d, array[1] = %d, *p = %d\n"</span>, v, <span class="built_in">array</span>[<span class="number">0</span>], <span class="built_in">array</span>[<span class="number">1</span>], *p);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>++*p</strong>、<strong>*p++</strong>和 <strong>*++p</strong>是由 postfix ++(++在後)、prefix ++(++在前)和 *(deference)運算子組合而成，其運算優先權與關聯性為:</p>
+<ol>
+<li>prefix ++與 *的運算優先權相同，關聯性為從右到左。</li>
+<li>postfix ++的運算優先權高於 prefix ++與 *，關聯性為從左到右。</li>
+</ol>
+<h4 id="p-3"><a href="#p-3" class="headerlink" title="++*p"></a>++*p</h4><p>因 prefix ++與 *的運算優先權相同，因此從右到左，可視為是 ++(*p)，將指標 p取值後加 1，結果為 v = 11, array[0] = 11, array[1] = 20, *p = 11。</p>
+<h4 id="p-4"><a href="#p-4" class="headerlink" title="*p++"></a>*p++</h4><p>因 postfix ++的運算優先權高於 *，可視為是 *(p++)，將指標 p加 1，因為是 postfix，所以取的值為指標 p加 1之前所指向的值，結果為 v = 10, array[0] = 10, array[1] = 20, *p = 20。</p>
+<h4 id="p-5"><a href="#p-5" class="headerlink" title="*++p"></a>*++p</h4><p>因 prefix ++與 *的運算優先權相同，因此從右到左，可視為是 *(++p)，將指標 p加 1後取值，結果為 v = 20, array[0] = 10, array[1] = 20, *p = 20。</p>
+<h4 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h4><p>遇到 postfix ++的情況，可視為在執行完 <strong>;</strong> 之後，才會執行 ++的運算。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="http://www.difranco.net/compsci/C_Operator_Precedence_Table.htm" target="_blank" rel="noopener">C Operator Precedence Table</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/2419b51b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1916,7 +2095,7 @@ add:
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>

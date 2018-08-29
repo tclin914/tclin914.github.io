@@ -110,25 +110,25 @@
 
 
 
-  <meta name="description" content="這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。 假設我們目前在 A機器，想要連線 B機器。 先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~/.ssh，按下 enter繼續。 jim@A:~ $ ssh-keygen -t rsa Generating public/private rsa key pair. Enter file in">
-<meta name="keywords" content="Shell">
+  <meta name="description" content="D standard extension為雙精度浮點數(single-precision floating-point)指令擴充，將 32個浮點數暫存器(f0-f31)擴充成為 64-bit。 下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器則為 f0-f31。 雙精度載入與儲存指令 (Double-Precision Lo">
+<meta name="keywords" content="RISC-V">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ssh 免密碼登入">
-<meta property="og:url" content="https://tclin914.github.io/251befd7/index.html">
+<meta property="og:title" content="RISCV-指令集架構介紹 - D Standard Extension">
+<meta property="og:url" content="https://tclin914.github.io/14d8f9aa/index.html">
 <meta property="og:site_name" content="Jim&#39;s Dev Blog">
-<meta property="og:description" content="這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。 假設我們目前在 A機器，想要連線 B機器。 先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~/.ssh，按下 enter繼續。 jim@A:~ $ ssh-keygen -t rsa Generating public/private rsa key pair. Enter file in">
+<meta property="og:description" content="D standard extension為雙精度浮點數(single-precision floating-point)指令擴充，將 32個浮點數暫存器(f0-f31)擴充成為 64-bit。 下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器則為 f0-f31。 雙精度載入與儲存指令 (Double-Precision Lo">
 <meta property="og:locale" content="zh-TW">
-<meta property="og:updated_time" content="2018-06-08T06:54:08.000Z">
+<meta property="og:updated_time" content="2018-08-29T09:34:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ssh 免密碼登入">
-<meta name="twitter:description" content="這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。 假設我們目前在 A機器，想要連線 B機器。 先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~/.ssh，按下 enter繼續。 jim@A:~ $ ssh-keygen -t rsa Generating public/private rsa key pair. Enter file in">
+<meta name="twitter:title" content="RISCV-指令集架構介紹 - D Standard Extension">
+<meta name="twitter:description" content="D standard extension為雙精度浮點數(single-precision floating-point)指令擴充，將 32個浮點數暫存器(f0-f31)擴充成為 64-bit。 下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器則為 f0-f31。 雙精度載入與儲存指令 (Double-Precision Lo">
 
 
 
 
 
 
-  <link rel="canonical" href="https://tclin914.github.io/251befd7/"/>
+  <link rel="canonical" href="https://tclin914.github.io/14d8f9aa/"/>
 
 
 
@@ -138,7 +138,7 @@
   };
 </script>
 
-  <title>ssh 免密碼登入 | Jim's Dev Blog</title>
+  <title>RISCV-指令集架構介紹 - D Standard Extension | Jim's Dev Blog</title>
   
 
 
@@ -307,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/251befd7/">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/14d8f9aa/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jim Lin">
@@ -324,7 +324,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">ssh 免密碼登入
+          <h2 class="post-title" itemprop="name headline">RISCV-指令集架構介紹 - D Standard Extension
               
             
           </h2>
@@ -349,7 +349,7 @@
                 
               
 
-              <time title="創建時間：2018-06-08 14:54:08" itemprop="dateCreated datePublished" datetime="2018-06-08T14:54:08+08:00">2018-06-08</time>
+              <time title="創建時間：2018-08-29 17:34:53" itemprop="dateCreated datePublished" datetime="2018-08-29T17:34:53+08:00">2018-08-29</time>
             
 
             
@@ -367,7 +367,7 @@
                 <span class="post-meta-item-text">分類於</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a></span>
 
                 
                 
@@ -382,10 +382,10 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/251befd7/#comments" itemprop="discussionUrl">
+                <a href="/14d8f9aa/#comments" itemprop="discussionUrl">
                 
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="251befd7/" itemprop="commentCount"></span>
+                        data-disqus-identifier="14d8f9aa/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -413,39 +413,63 @@
       
 
       
-        <p>這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。</p>
-<p>假設我們目前在 A機器，想要連線 B機器。</p>
-<p>先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~/.ssh，按下 enter繼續。</p>
-<pre><code>jim@A:~ $ ssh-keygen -t rsa
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/users/jim/.ssh/id_rsa):
-</code></pre><p>請勿輸入密碼，直接按下 enter繼續。</p>
-<pre><code>Enter passphrase (empty for no passphrase):
-</code></pre><p>一樣不用輸入密碼，直接按下 enter繼續。</p>
-<pre><code>Enter same passphrase again:
-</code></pre><p>建立好 key了。</p>
-<pre><code>Your public key has been saved in /home/users/jim/.ssh/id_rsa.pub.
-The key fingerprint is:
-SHA256:Q14hkz7AJG0rcEv1kmffq6gE5C6GkqTb9J/CYWj8UHw jim@A
-</code></pre><p>解說一下產生的一對 key的作用。</p>
-<ul>
-<li>id_rsa: private key</li>
-<li>id_rsa.pub: public key</li>
+        <p>D standard extension為雙精度浮點數(single-precision floating-point)指令擴充，將 32個浮點數暫存器(f0-f31)擴充成為 64-bit。</p>
+<p>下面所提到的一般暫存器(general register)指的是在 RV32I或 RV64I的 x0-x31，浮點數暫存器則為 f0-f31。</p>
+<h3 id="雙精度載入與儲存指令-Double-Precision-Load-and-Store-Instructions"><a href="#雙精度載入與儲存指令-Double-Precision-Load-and-Store-Instructions" class="headerlink" title="雙精度載入與儲存指令 (Double-Precision Load and Store Instructions)"></a>雙精度載入與儲存指令 (Double-Precision Load and Store Instructions)</h3><ul>
+<li><p><strong>FLD</strong><br>  <em>fld rd, rs1, simm12</em><br>  立即值為 sign-extended 12-bit，載入位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 double-precision浮點數從記憶體中載入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FSW</strong><br>  <em>fsd rs2, rs1, simm12</em><br>  立即值為 sign-extended 12-bit，儲存位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 rs2浮點數暫存器的 double-precision浮點數值寫入記憶體。</p>
+</li>
 </ul>
-<p>將 id_rsa.pub的內容複製到遠端機器的 ~/.ssh/authorized_keys中，之後在登入時，便會用本地的 id_rsa與遠端機器的 id_rsa.pub做認證，便可免輸入密碼登入遠端機器。</p>
-<p>接下來在 B機器建立目錄 ~/.ssh，如果已有可跳過此步驟。</p>
-<pre><code>jim@A:~ $ ssh b@B mkdir -p .ssh
-jim@B&apos;s password:
-</code></pre><p>把 A機器的 ~/.ssh/id_rsa.pub也就是 public key複製到 B機器的 .ssh/authorized_keys。</p>
-<p>方法 1</p>
-<pre><code>jim@A:~ $ cat .ssh/id_rsa.pub | ssh jim@B &apos;cat &gt;&gt; .ssh/authorized_keys&apos;
-jim@B&apos;s password:
-</code></pre><p>方法 2</p>
-<pre><code>jim@A:~ $ ssh-copy-id -i .ssh/id_rsa.pub jim@B
-jim@B&apos;s password:
-</code></pre><p>即可成功登入 B機器而不需要輸入密碼了。</p>
-<pre><code>jim@A:~ $ ssh jim@B
-</code></pre>
+<h3 id="雙精度浮點數運算指令-Double-Precision-Floating-Point-Computational-Instructions"><a href="#雙精度浮點數運算指令-Double-Precision-Floating-Point-Computational-Instructions" class="headerlink" title="雙精度浮點數運算指令 (Double-Precision Floating-Point Computational Instructions)"></a>雙精度浮點數運算指令 (Double-Precision Floating-Point Computational Instructions)</h3><ul>
+<li><p><strong>FADD.D/FSUB.D</strong><br>  <em>fadd.d/fsub.d rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做加法/減法運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FMUL.D/FDIV.D</strong><br>  <em>fmul.d/fdiv.d rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做乘法/除法運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FMIN.D/FMAX.D</strong><br>  <em>fmin.d/fmax.d rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做最大值/最小值比較，將最大值/最小值寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>FSQRT.D</strong><br>  <em>fsqrt.d rd, rs1</em><br>  將 rs1浮點數暫存器做取平方根運算，結果寫入 rd浮點數暫存器。</p>
+</li>
+<li><p><strong>F[N]MADD/F[N]MSUB</strong><br>  <em>f[n]madd/f[n]msub rd, rs1, rs2, rs3</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做乘法運算後，再與 rs3浮點數暫存器做加法/乘法運算，結果寫入 rd浮點數暫存器，n版本則為做完乘法運算後取 negate，為乘法與加法指令一次完成，中間並沒有經過 rounding，所以精準度上會比一般乘法指令加上加法指令還高。</p>
+</li>
+</ul>
+<h3 id="雙精度浮點數轉換與移動指令-Double-precision-Floating-Point-Conversion-and-Move-Instructions"><a href="#雙精度浮點數轉換與移動指令-Double-precision-Floating-Point-Conversion-and-Move-Instructions" class="headerlink" title="雙精度浮點數轉換與移動指令 (Double-precision Floating-Point Conversion and Move Instructions)"></a>雙精度浮點數轉換與移動指令 (Double-precision Floating-Point Conversion and Move Instructions)</h3><p>將浮點數轉換為整數或整數轉換為浮點數指令，會根據指令中的 rm field來決定轉換的 rounding mode，以及單精度與雙精度之間的轉換。</p>
+<ul>
+<li><p><strong>FCVT.W.D/FCVT.L.D</strong><br>  <em>fcvt.w.d/fcvt.l.d rd, rs1</em><br>  將 rs1浮點數暫存器中的浮點數轉換為 signed 32-bit/64-bit，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.D.W/FCVT.D.L</strong><br>  <em>fcvt.d.w/fcvt.d.l rd, rs1</em><br>  將 rs1一般暫存器中的signed 整數轉換為浮點數，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.WU.D/FCVT.LU.D</strong><br>  <em>fcvt.wu.d/fcvt.lu.d rd, rs1</em><br>  將 rs1浮點數暫存器中的浮點數轉換為 unsigned 32-bit/64-bit，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.D.WU/FCVT.D.LU</strong><br>  <em>fcvt.d.wu/fcvt.d.lu rd, rs1</em><br>  將 rs1一般暫存器中的unsigned 整數轉換為浮點數，結果寫入 rd一般暫存器。</p>
+</li>
+<li><p><strong>FCVT.S.D/FCVT.D.S</strong><br>  <em>fcvt.s.d/fcvt.d.s rd, rs1</em><br>  為單精度與雙精度之間的轉換。</p>
+</li>
+</ul>
+<p>sign-injection Instructions</p>
+<ul>
+<li><p><strong>FSGNJ.D</strong><br>  <em>fsgnj.d rd, rs1, rs2</em><br>  rd浮點數暫存器中的數值來自 rs1浮點數暫存器，sign bit則為 rs2浮點數暫存器的 sign bit。</p>
+</li>
+<li><p><strong>FSGNJN.D</strong><br>  <em>fsgnjn.d rd, rs1, rs2</em><br>  rd浮點數暫存器中的數值來自 rs1浮點數暫存器，sign bit則為 rs2浮點數暫存器的 sign bit的相反。</p>
+</li>
+<li><p><strong>FSGNJX.D</strong><br>  <em>fsgnjx.d rd, rs1, rs2</em><br>  rd浮點數暫存器的數值來自 rs1浮點數暫存器，sign bit則為 rs1浮點數暫存器的 sign bit與 rs2浮點數暫存器的 sign bit做 xor運算。</p>
+</li>
+</ul>
+<p>只在 RV64有效，單純 floating point與 integer之間的移動指令，與上面不同的是，只做 bit的移動，並不做浮點數與整數之間的轉換。</p>
+<ul>
+<li><p><strong>FMV.X.D</strong><br>  <em>fmv.x.w rd, rs1</em><br>  將 rs1浮點數暫存器的 64-bit數值寫入 rd一般暫存器中。</p>
+</li>
+<li><p><strong>FMV.D.X</strong><br>  <em>fmv.w.x rd, rs1</em><br>  將 rs1一般暫存器的 64-bit數值寫入 rd浮點數暫存器。</p>
+</li>
+</ul>
+<h3 id="雙精度浮點數比較指令-Double-Precision-Floating-Point-Compare-Instructions"><a href="#雙精度浮點數比較指令-Double-Precision-Floating-Point-Compare-Instructions" class="headerlink" title="雙精度浮點數比較指令 (Double-Precision Floating-Point Compare Instructions)"></a>雙精度浮點數比較指令 (Double-Precision Floating-Point Compare Instructions)</h3><ul>
+<li><strong>FEQ.D/FLT.D/FLE.D</strong><br>  <em>feq.d/flt.d/fle.d rd, rs1, rs2</em><br>  將 rs1浮點數暫存器與 rs2浮點數暫存器做 eq/lt/le比較，結果寫入 rd一般暫存器。</li>
+</ul>
+<h3 id="雙精度浮點數分類指令-Double-Precision-Floating-Point-Classify-Instruction"><a href="#雙精度浮點數分類指令-Double-Precision-Floating-Point-Classify-Instruction" class="headerlink" title="雙精度浮點數分類指令 (Double-Precision Floating-Point Classify Instruction)"></a>雙精度浮點數分類指令 (Double-Precision Floating-Point Classify Instruction)</h3><ul>
+<li><strong>FCLASS.D</strong><br>  <em>fclass.d rd, rs1</em><br>  功能與 FCLASS.S類似。</li>
+</ul>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><p>[1] <a href="https://riscv.org/specifications/" target="_blank" rel="noopener">The RISC-V Instruction Set Manual</a></p>
+
       
     </div>
 
@@ -465,7 +489,7 @@ jim@B&apos;s password:
       
         <div class="post-tags">
           
-            <a href="/tags/Shell/" rel="tag"># Shell</a>
+            <a href="/tags/RISC-V/" rel="tag"># RISC-V</a>
           
         </div>
       
@@ -478,8 +502,8 @@ jim@B&apos;s password:
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/d7ed614/" rel="next" title="資料模型 Data Model - LP32 ILP32 LP64 ILP64 LLP64">
-                <i class="fa fa-chevron-left"></i> 資料模型 Data Model - LP32 ILP32 LP64 ILP64 LLP64
+              <a href="/3d45634e/" rel="next" title="RISC-V 指令集架構介紹 - F Standard Extension">
+                <i class="fa fa-chevron-left"></i> RISC-V 指令集架構介紹 - F Standard Extension
               </a>
             
           </div>
@@ -487,10 +511,6 @@ jim@B&apos;s password:
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2723020e/" rel="prev" title="更改所有目錄檔案權限方法">
-                更改所有目錄檔案權限方法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -549,8 +569,17 @@ jim@B&apos;s password:
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概要
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -669,6 +698,22 @@ jim@B&apos;s password:
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#雙精度載入與儲存指令-Double-Precision-Load-and-Store-Instructions"><span class="nav-number">1.</span> <span class="nav-text">雙精度載入與儲存指令 (Double-Precision Load and Store Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雙精度浮點數運算指令-Double-Precision-Floating-Point-Computational-Instructions"><span class="nav-number">2.</span> <span class="nav-text">雙精度浮點數運算指令 (Double-Precision Floating-Point Computational Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雙精度浮點數轉換與移動指令-Double-precision-Floating-Point-Conversion-and-Move-Instructions"><span class="nav-number">3.</span> <span class="nav-text">雙精度浮點數轉換與移動指令 (Double-precision Floating-Point Conversion and Move Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雙精度浮點數比較指令-Double-Precision-Floating-Point-Compare-Instructions"><span class="nav-number">4.</span> <span class="nav-text">雙精度浮點數比較指令 (Double-Precision Floating-Point Compare Instructions)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雙精度浮點數分類指令-Double-Precision-Floating-Point-Classify-Instruction"><span class="nav-number">5.</span> <span class="nav-text">雙精度浮點數分類指令 (Double-Precision Floating-Point Classify Instruction)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reference"><span class="nav-number">5.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -815,9 +860,9 @@ jim@B&apos;s password:
   
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://tclin914.github.io/251befd7/';
-        this.page.identifier = '251befd7/';
-        this.page.title = 'ssh 免密碼登入';
+        this.page.url = 'https://tclin914.github.io/14d8f9aa/';
+        this.page.identifier = '14d8f9aa/';
+        this.page.title = 'RISCV-指令集架構介紹 - D Standard Extension';
         };
       function loadComments () {
         var d = document, s = d.createElement('script');
