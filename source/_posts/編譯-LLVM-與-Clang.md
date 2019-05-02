@@ -92,11 +92,11 @@ int add(int a, int b) {
 
 編譯程式
 
-    $ ./llvm-build/bin/clang -O2 -c -o add.o add.c
+    $ ./llvm-install/bin/clang -O2 -c -o add.o add.c
 
 將程式反組譯，可看到 aarch64 的 assembly code
 
-    $ ./llvm-build/bin/llvm-objdump -d add.o
+    $ ./llvm-install/bin/llvm-objdump -d add.o
     add.o:  file format ELF64-aarch64-little
     Disassembly of section .text:
     add:
