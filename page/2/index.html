@@ -1253,9 +1253,9 @@ $ bugpoint      clang-cpp              git-clang-format  llvm-cfi-verify  llvm-d
   clang-cl      clang-rename           llvm-cat          llvm-cxxfilt     llvm-extract    llvm-modextract  llvm-profdata    llvm-split    opt
 </code></pre><p>寫個範例程式，來測試一下編好的編譯器<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>編譯程式</p>
-<pre><code>$ ./llvm-build/bin/clang -O2 -c -o add.o add.c
+<pre><code>$ ./llvm-install/bin/clang -O2 -c -o add.o add.c
 </code></pre><p>將程式反組譯，可看到 aarch64 的 assembly code</p>
-<pre><code>$ ./llvm-build/bin/llvm-objdump -d add.o
+<pre><code>$ ./llvm-install/bin/llvm-objdump -d add.o
 add.o:  file format ELF64-aarch64-little
 Disassembly of section .text:
 add:
@@ -2213,7 +2213,7 @@ add:
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

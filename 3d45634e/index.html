@@ -426,9 +426,9 @@
 <p>若發生 floating point exception，則會去設定相對應的 fcsr exception flags，下方表格為各個 flag與其 floating point exception的對照。</p>
 <img src="/3d45634e/exception_flag_encoding.png">
 <h3 id="單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions"><a href="#單精度載入與儲存指令-Single-Precision-Load-and-Store-Instructions" class="headerlink" title="單精度載入與儲存指令 (Single-Precision Load and Store Instructions)"></a>單精度載入與儲存指令 (Single-Precision Load and Store Instructions)</h3><ul>
-<li><p><strong>FLW</strong><br>  <em>flw rd, rs1, simm12</em><br>  立即值部分為 sign-extended 12-bit，載入位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 single-precision浮點數值從記憶體中載入 rd浮點數暫存器。</p>
+<li><p><strong>FLW</strong><br>  <em>flw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，載入位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 single-precision浮點數值從記憶體中載入 rd浮點數暫存器。</p>
 </li>
-<li><p><strong>FSW</strong><br>  <em>fsw rs2, rs1, simm12</em><br>  立即值部分為 sign-extended 12-bit，儲存位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 rs2浮點數暫存器的 single-precision浮點數值寫入記憶體。</p>
+<li><p><strong>FSW</strong><br>  <em>fsw rd, rs1, simm12</em><br>  常數部分為 sign-extended 12-bit，儲存位址則為 rs1一般暫存器加上 sign-extended 12-bit，將 rs1浮點數暫存器的 single-precision浮點數值寫入記憶體。</p>
 </li>
 </ul>
 <h3 id="單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions"><a href="#單精度浮點數運算指令-Single-Presicion-Floating-Point-Computational-Instructions" class="headerlink" title="單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)"></a>單精度浮點數運算指令 (Single-Presicion Floating-Point Computational Instructions)</h3><ul>
@@ -463,11 +463,11 @@
 <li><p><strong>FSGNJX.S</strong><br>  <em>fsgnjx.s rd, rs1, rs2</em><br>  rd浮點數暫存器的數值來自 rs1浮點數暫存器，sign bit則為 rs1浮點數暫存器的 sign bit與 rs2浮點數暫存器的 sign bit做 xor運算。</p>
 </li>
 </ul>
-<p>單純 floating point與 integer之間的移動指令，與上面不同的是，只做 bit的移動，並不做浮點數與整數之間的轉換。</p>
+<p>單純 floating point與 integer之間的 move指令，與上面不同的是，只做 bit的移動，並不做浮點數與整數之間的轉換。</p>
 <ul>
 <li><p><strong>FMV.X.W</strong><br>  <em>fmv.x.w rd, rs1</em><br>  將 rs1浮點數暫存器的 32-bit數值寫入 rd一般暫存器中，若在 RV64，則用 sign bit填滿最高 32-bit。</p>
 </li>
-<li><p><strong>FMV.W.X</strong><br>  <em>fmv.w.x rd, rs1</em><br>  將 rs1一般暫存器的最低 32-bit數值寫入 rd浮點數暫存器。</p>
+<li><p><strong>FMV.W.X</strong><br>  <em>fmv.w.x rd, rs1</em><br>  將 rs1一般暫存器的最低 32-bit(已用IEEE 754-2008編碼好)數值寫入 rd浮點數暫存器。</p>
 </li>
 </ul>
 <h3 id="單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions"><a href="#單精度浮點數比較指令-Single-Precision-Floating-Point-Compare-Instructions" class="headerlink" title="單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)"></a>單精度浮點數比較指令 (Single-Precision Floating-Point Compare Instructions)</h3><ul>
@@ -741,7 +741,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
