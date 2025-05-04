@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tclin914.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。 假設我們目前在 A機器，想要連線 B機器。 先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~&#x2F;.ssh，按下 enter繼續。 jim@A:~ $ ssh-keygen -t rsa Generating public&#x2F;private rsa key pair. Enter fil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ssh 免密碼登入">
+<meta property="og:url" content="https://tclin914.github.io/251befd7/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。 假設我們目前在 A機器，想要連線 B機器。 先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~&#x2F;.ssh，按下 enter繼續。 jim@A:~ $ ssh-keygen -t rsa Generating public&#x2F;private rsa key pair. Enter fil">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-06-08T06:54:08.000Z">
+<meta property="article:modified_time" content="2018-06-08T06:54:08.000Z">
+<meta property="article:author" content="Jim Lin">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tclin914.github.io/251befd7/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://tclin914.github.io/251befd7/","path":"251befd7/","title":"ssh 免密碼登入"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ssh 免密碼登入 | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jim's Dev Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jim Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/251befd7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jim Lin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ssh 免密碼登入 | Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ssh 免密碼登入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-06-08 14:54:08" itemprop="dateCreated datePublished" datetime="2018-06-08T14:54:08+08:00">2018-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>這邊紀錄一下如何 ssh連線其它機器可以免輸入密碼登入。</p>
+<p>假設我們目前在 A機器，想要連線 B機器。</p>
+<p>先在 A機器產生 id_rsa與 id_rsa.pub，若已產生可免去此步驟， key預設放在 ~&#x2F;.ssh，按下 enter繼續。</p>
+<pre><code>jim@A:~ $ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/users/jim/.ssh/id_rsa):
+</code></pre>
+<p>請勿輸入密碼，直接按下 enter繼續。</p>
+<pre><code>Enter passphrase (empty for no passphrase):
+</code></pre>
+<p>一樣不用輸入密碼，直接按下 enter繼續。</p>
+<pre><code>Enter same passphrase again:
+</code></pre>
+<p>建立好 key了。</p>
+<pre><code>Your public key has been saved in /home/users/jim/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:Q14hkz7AJG0rcEv1kmffq6gE5C6GkqTb9J/CYWj8UHw jim@A
+</code></pre>
+<p>解說一下產生的一對 key的作用。</p>
+<ul>
+<li>id_rsa: private key</li>
+<li>id_rsa.pub: public key</li>
+</ul>
+<p>將 id_rsa.pub的內容複製到遠端機器的 ~&#x2F;.ssh&#x2F;authorized_keys中，之後在登入時，便會用本地的 id_rsa與遠端機器的 id_rsa.pub做認證，便可免輸入密碼登入遠端機器。</p>
+<p>接下來在 B機器建立目錄 ~&#x2F;.ssh，如果已有可跳過此步驟。</p>
+<pre><code>jim@A:~ $ ssh b@B mkdir -p .ssh
+jim@B&#39;s password:
+</code></pre>
+<p>把 A機器的 ~&#x2F;.ssh&#x2F;id_rsa.pub也就是 public key複製到 B機器的 .ssh&#x2F;authorized_keys。</p>
+<p>方法 1</p>
+<pre><code>jim@A:~ $ cat .ssh/id_rsa.pub | ssh jim@B &#39;cat &gt;&gt; .ssh/authorized_keys&#39;
+jim@B&#39;s password:
+</code></pre>
+<p>方法 2</p>
+<pre><code>jim@A:~ $ ssh-copy-id -i .ssh/id_rsa.pub jim@B
+jim@B&#39;s password:
+</code></pre>
+<p>即可成功登入 B機器而不需要輸入密碼了。</p>
+<pre><code>jim@A:~ $ ssh jim@B
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Shell/" rel="tag"># Shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/d7ed614/" rel="prev" title="資料模型 Data Model - LP32 ILP32 LP64 ILP64 LLP64">
+                  <i class="fa fa-angle-left"></i> 資料模型 Data Model - LP32 ILP32 LP64 ILP64 LLP64
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2723020e/" rel="next" title="更改所有目錄檔案權限方法">
+                  更改所有目錄檔案權限方法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

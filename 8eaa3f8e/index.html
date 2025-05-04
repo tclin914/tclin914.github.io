@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tclin914.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="這邊紀錄一下如何使用 GDB 對 LLVM(Low Level Virtual Machine) 進行偵錯，LLVM 前端為 Clang，若我們在下編譯參數時，希望 Clang 直接產生 object file 或是 executable file，Clang 在處理完前端資訊後，會接著驅動 opt(LLVM Optimizer) 進行優化，驅動 llc(LLVM static compiler)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 GDB 來偵錯 LLVM">
+<meta property="og:url" content="https://tclin914.github.io/8eaa3f8e/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="這邊紀錄一下如何使用 GDB 對 LLVM(Low Level Virtual Machine) 進行偵錯，LLVM 前端為 Clang，若我們在下編譯參數時，希望 Clang 直接產生 object file 或是 executable file，Clang 在處理完前端資訊後，會接著驅動 opt(LLVM Optimizer) 進行優化，驅動 llc(LLVM static compiler)">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-04-19T23:43:51.000Z">
+<meta property="article:modified_time" content="2018-04-19T23:43:51.000Z">
+<meta property="article:author" content="Jim Lin">
+<meta property="article:tag" content="GDB">
+<meta property="article:tag" content="Clang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tclin914.github.io/8eaa3f8e/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://tclin914.github.io/8eaa3f8e/","path":"8eaa3f8e/","title":"使用 GDB 來偵錯 LLVM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 GDB 來偵錯 LLVM | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jim's Dev Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jim Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/8eaa3f8e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jim Lin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用 GDB 來偵錯 LLVM | Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 GDB 來偵錯 LLVM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-04-20 07:43:51" itemprop="dateCreated datePublished" datetime="2018-04-20T07:43:51+08:00">2018-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GDB/" itemprop="url" rel="index"><span itemprop="name">GDB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>這邊紀錄一下如何使用 GDB 對 LLVM(Low Level Virtual Machine) 進行偵錯，LLVM 前端為 Clang，若我們在下編譯參數時，希望 Clang 直接產生 object file 或是 executable file，Clang 在處理完前端資訊後，會接著驅動 opt(LLVM Optimizer) 進行優化，驅動 llc(LLVM static compiler) 產生目的碼，opt 與 llc 皆為獨立的程式，Clang 會呼叫起此兩個程式來進行剩餘的編譯工作，因此若將 break point 設在 opt 或 llc 所屬的程式碼時，會遇到無法停止的情況，本文紀錄如何解決此情況。</p>
+<p>首先記得在編譯 LLVM 時，在 configure 加上 <code>-DCMAKE_C_FLAGS=&quot;-O0 -g3&quot;</code> 和 <code>-DCMAKE_CXX_FLAGS=&quot;-O0 -g3&quot;</code>，讓在編譯 LLVM 過程能夠加上 Debug information，可參考此篇如何編譯 LLVM 和 Clang <a href="https://tclin914.github.io/%E7%B7%A8%E8%AD%AF-LLVM-%E8%88%87-Clang.html">編譯 LLVM 與 Clang</a>。</p>
+<p>寫個範例程式，讓我們能夠在編譯此範例程式的過程中，對編譯器偵錯。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">shift_and</span><span class="params">(<span class="type">int</span> a)</span> &#123;</span><br><span class="line">  <span class="type">int</span> b = a &gt;&gt; <span class="number">12</span>;</span><br><span class="line">  <span class="keyword">return</span> b &amp; <span class="number">0xfff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>編譯此程式，並在過程中使用 GDB 來偵錯。</p>
+<pre><code>$ gdb --args ./llvm-build/bin/clang -O2 -c -o shift_and.o shift_and.c
+GNU gdb (GDB) Fedora 7.12.1-48.fc25
+Copyright (C) 2017 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from ./llvm-build/bin/clang...done.
+(gdb)
+</code></pre>
+<p>假設我們想要停在 lib&#x2F;Target&#x2F;AArch64&#x2F;AArch64ISelDAGToDAG.cpp的2707行。</p>
+<pre><code>(gdb) b AArch64ISelDAGToDAG.cpp:2707
+Breakpoint 1 at 0x1940ecd: file /home/users/jim/llvm/llvm-6.0.0.src/lib/Target/AArch64/AArch64ISelDAGToDAG.cpp, line 2707.
+</code></pre>
+<p>讓程式開始執行，會發現因為使用 vfork 產生 child process的關係，gdb 此時無法針對產生出的 child process偵錯，會直接結束離開。</p>
+<pre><code>(gdb) run
+Starting program: /home/users/jim/llvm/llvm-build/bin/clang -O2 -c -o shift_and.o shift_and.c
+Missing separate debuginfos, use: dnf debuginfo-install glibc-2.24-10.fc25.x86_64
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library &quot;/lib64/libthread_db.so.1&quot;.
+Detaching after vfork from child process 16302.
+[Inferior 1 (process 16298) exited normally]
+Missing separate debuginfos, use: dnf debuginfo-install libgcc-6.4.1-1.fc25.x86_64 libstdc++-6.4.1-1.fc25.x86_64 ncurses-libs-6.0-6.20160709.fc25.x86_64 zlib-1.2.8-10.fc24.x86_64
+</code></pre>
+<p>解決方法即為在執行程式之前，先設定好 <code>set follow-fork-mode child</code>，可看到順利地停在 AArch64ISelDAGToDAG.cpp:2707了。</p>
+<pre><code>$ gdb --args ./llvm-build/bin/clang -O2 -c -o shift_and.o shift_and.c
+GNU gdb (GDB) Fedora 7.12.1-48.fc25
+Copyright (C) 2017 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type &quot;show copying&quot;
+and &quot;show warranty&quot; for details.
+This GDB was configured as &quot;x86_64-redhat-linux-gnu&quot;.
+Type &quot;show configuration&quot; for configuration details.
+For bug reporting instructions, please see:
+&lt;http://www.gnu.org/software/gdb/bugs/&gt;.
+Find the GDB manual and other documentation resources online at:
+&lt;http://www.gnu.org/software/gdb/documentation/&gt;.
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from ./llvm-build/bin/clang...done.
+(gdb) b AArch64ISelDAGToDAG.cpp:2707
+Breakpoint 1 at 0x1940ecd: file /home/users/jim/llvm/llvm-6.0.0.src/lib/Target/AArch64/AArch64ISelDAGToDAG.cpp, line 2707.
+(gdb) set follow-fork-mode child
+(gdb) run
+Starting program: /home/users/jim/llvm/llvm-build/bin/clang -O2 -c -o shift_and.o shift_and.c
+Missing separate debuginfos, use: dnf debuginfo-install glibc-2.24-10.fc25.x86_64
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library &quot;/lib64/libthread_db.so.1&quot;.
+[New process 16732]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library &quot;/lib64/libthread_db.so.1&quot;.
+process 16732 is executing new program: /home/users/jim/llvm/llvm-build/bin/clang-6.0
+Missing separate debuginfos, use: dnf debuginfo-install libgcc-6.4.1-1.fc25.x86_64 libstdc++-6.4.1-1.fc25.x86_64 ncurses-libs-6.0-6.20160709.fc25.x86_64 zlib-1.2.8-10.fc24.x86_64
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library &quot;/lib64/libthread_db.so.1&quot;.
+[Switching to Thread 0x7ffff7fc5600 (LWP 16732)]
+
+Thread 2.1 &quot;clang-6.0&quot; hit Breakpoint 1, (anonymous namespace)::AArch64DAGToDAGISel::Select (this=0x9fe0190, Node=0xa0923a0)
+at /home/users/jim/llvm/llvm-6.0.0.src/lib/Target/AArch64/AArch64ISelDAGToDAG.cpp:2707
+2707        if (tryBitfieldExtractOp(Node))
+Missing separate debuginfos, use: dnf debuginfo-install glibc-2.24-10.fc25.x86_64 libgcc-6.4.1-1.fc25.x86_64 libstdc++-6.4.1-1.fc25.x86_64 ncurses-libs-6.0-6.20160709.fc25.x86_64 zlib-1.2.8-10.fc24.x86_64
+(gdb)
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GDB/" rel="tag"># GDB</a>
+              <a href="/tags/Clang/" rel="tag"># Clang</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/a0c0fe90/" rel="prev" title="編譯 LLVM 與 Clang">
+                  <i class="fa fa-angle-left"></i> 編譯 LLVM 與 Clang
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2419b51b/" rel="next" title="Shell programming: if 條件式">
+                  Shell programming: if 條件式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

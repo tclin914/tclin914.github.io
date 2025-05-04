@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tclin914.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="在 Shell programming中如何使用 if條件式。 if 條件式語法使用 command exit statusif command then     command     ... else     command     ... fi  使用 [ … ]if [ condition ] then     command     ... else     command     ..">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell programming: if 條件式">
+<meta property="og:url" content="https://tclin914.github.io/2419b51b/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="在 Shell programming中如何使用 if條件式。 if 條件式語法使用 command exit statusif command then     command     ... else     command     ... fi  使用 [ … ]if [ condition ] then     command     ... else     command     ..">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-05-06T03:23:11.000Z">
+<meta property="article:modified_time" content="2018-05-06T03:23:11.000Z">
+<meta property="article:author" content="Jim Lin">
+<meta property="article:tag" content="Shell programming">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tclin914.github.io/2419b51b/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://tclin914.github.io/2419b51b/","path":"2419b51b/","title":"Shell programming: if 條件式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Shell programming: if 條件式 | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jim's Dev Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#if-%E6%A2%9D%E4%BB%B6%E5%BC%8F%E8%AA%9E%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">if 條件式語法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-command-exit-status"><span class="nav-number">1.1.</span> <span class="nav-text">使用 command exit status</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-%E2%80%A6"><span class="nav-number">1.2.</span> <span class="nav-text">使用 [ … ]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-test-command"><span class="nav-number">1.3.</span> <span class="nav-text">使用 test command</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if-%E6%AF%94%E8%BC%83%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">if 比較運算子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E4%B8%B2%E6%AF%94%E8%BC%83%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">2.1.</span> <span class="nav-text">字串比較運算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B4%E6%95%B8%E6%AF%94%E8%BC%83%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">整數比較運算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AA%94%E6%A1%88%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">2.3.</span> <span class="nav-text">檔案運算子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%82%8F%E8%BC%AF%E8%B2%A0%E9%81%8B%E7%AE%97%E5%AD%90"><span class="nav-number">2.4.</span> <span class="nav-text">邏輯負運算子 !</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%82%8F%E8%BC%AF-and%E9%81%8B%E7%AE%97%E5%AD%90-a"><span class="nav-number">2.5.</span> <span class="nav-text">邏輯 and運算子 -a</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%82%8F%E8%BC%AF-or%E9%81%8B%E7%AE%97%E5%AD%90-o"><span class="nav-number">2.6.</span> <span class="nav-text">邏輯 or運算子 -o</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%AC%E8%99%9F%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.7.</span> <span class="nav-text">括號的使用</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jim Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/2419b51b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jim Lin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Shell programming: if 條件式 | Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shell programming: if 條件式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-05-06 11:23:11" itemprop="dateCreated datePublished" datetime="2018-05-06T11:23:11+08:00">2018-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Shell-programming/" itemprop="url" rel="index"><span itemprop="name">Shell programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>在 Shell programming中如何使用 if條件式。</p>
+<h4 id="if-條件式語法"><a href="#if-條件式語法" class="headerlink" title="if 條件式語法"></a>if 條件式語法</h4><h5 id="使用-command-exit-status"><a href="#使用-command-exit-status" class="headerlink" title="使用 command exit status"></a>使用 command exit status</h5><pre><code>if command
+then
+    command
+    ...
+else
+    command
+    ...
+fi
+</code></pre>
+<h5 id="使用-…"><a href="#使用-…" class="headerlink" title="使用 [ … ]"></a>使用 [ … ]</h5><pre><code>if [ condition ]
+then
+    command
+    ...
+else
+    command
+    ...
+fi
+</code></pre>
+<h5 id="使用-test-command"><a href="#使用-test-command" class="headerlink" title="使用 test command"></a>使用 test command</h5><pre><code>if test condition
+then
+    command
+    ...
+else
+    command
+    ...
+fi
+</code></pre>
+<h4 id="if-比較運算子"><a href="#if-比較運算子" class="headerlink" title="if 比較運算子"></a>if 比較運算子</h4><h5 id="字串比較運算子"><a href="#字串比較運算子" class="headerlink" title="字串比較運算子"></a>字串比較運算子</h5><table>
+<thead>
+<tr>
+<th>[ … ]</th>
+<th>test command</th>
+<th>用法(回傳 TRUE)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>if [ string1 &#x3D; string2 ]</td>
+<td>if test string1 &#x3D; string2</td>
+<td>string1與 string2相同</td>
+</tr>
+<tr>
+<td>if [ string1 !&#x3D; string2 ]</td>
+<td>if test string1 !&#x3D; string2</td>
+<td>string1與 string2不相同</td>
+</tr>
+<tr>
+<td>if [ string ]</td>
+<td>if test string</td>
+<td>string 不為空值</td>
+</tr>
+<tr>
+<td>if [ -n string ]</td>
+<td>if test -n string</td>
+<td>string 不為空值</td>
+</tr>
+<tr>
+<td>if [ -z string ]</td>
+<td>if test -z string</td>
+<td>string 為空值</td>
+</tr>
+</tbody></table>
+<h5 id="整數比較運算子"><a href="#整數比較運算子" class="headerlink" title="整數比較運算子"></a>整數比較運算子</h5><table>
+<thead>
+<tr>
+<th>[ … ]</th>
+<th>test command</th>
+<th>用法(回傳 True)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>if [ int1 -eq int2 ]</td>
+<td>if test int1 -eq int2</td>
+<td>int1等於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -ne int2 ]</td>
+<td>if test int1 -ne int2</td>
+<td>int1不等於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -gt int2 ]</td>
+<td>if test int1 -gt int2</td>
+<td>int1大於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -ge int2 ]</td>
+<td>if test int1 -ge int2</td>
+<td>int1大於等於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -lt int2 ]</td>
+<td>if test int1 -lt int2</td>
+<td>int1小於 int2</td>
+</tr>
+<tr>
+<td>if [ int1 -le int2 ]</td>
+<td>if test int1 -le int2</td>
+<td>int1小於等於 int2</td>
+</tr>
+</tbody></table>
+<h5 id="檔案運算子"><a href="#檔案運算子" class="headerlink" title="檔案運算子"></a>檔案運算子</h5><table>
+<thead>
+<tr>
+<th>[ … ]</th>
+<th>test command</th>
+<th>用法(回傳 True)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>if [ -d file ]</td>
+<td>if test -d file</td>
+<td>file是個目錄</td>
+</tr>
+<tr>
+<td>if [ -e file ]</td>
+<td>if test -e file</td>
+<td>file存在</td>
+</tr>
+<tr>
+<td>if [ -f file ]</td>
+<td>if test -f file</td>
+<td>file是個檔案</td>
+</tr>
+<tr>
+<td>if [ -r file ]</td>
+<td>if test -r file</td>
+<td>file可被讀取</td>
+</tr>
+<tr>
+<td>if [ -s file ]</td>
+<td>if test -s file</td>
+<td>file內容非空</td>
+</tr>
+<tr>
+<td>if [ -w file ]</td>
+<td>if test -w file</td>
+<td>file可被寫入</td>
+</tr>
+<tr>
+<td>if [ -x file ]</td>
+<td>if test -x file</td>
+<td>file可被執行</td>
+</tr>
+<tr>
+<td>if [ -L file ]</td>
+<td>if test -x file</td>
+<td>file是個符號連結</td>
+</tr>
+<tr>
+<td>if [ -b file ]</td>
+<td>if test -b file</td>
+<td>file is a block special file</td>
+</tr>
+<tr>
+<td>if [ -c file ]</td>
+<td>if test -c file</td>
+<td>file is a character special file</td>
+</tr>
+<tr>
+<td>if [ -g file ]</td>
+<td>if test -g file</td>
+<td>file’s set group ID flag is set</td>
+</tr>
+<tr>
+<td>if [ -h file ]</td>
+<td>if test -h file</td>
+<td>file is a symbolic link. This operator is retained for compatibility with previous versions of this program. Do not rely on its existence; use -L instead.</td>
+</tr>
+<tr>
+<td>if [ -k file ]</td>
+<td>if test -k file</td>
+<td>file’s sticky bit is set</td>
+</tr>
+<tr>
+<td>if [ -p file ]</td>
+<td>if test -p file</td>
+<td>file is a named pipe (FIFO)</td>
+</tr>
+<tr>
+<td>if [ -u file ]</td>
+<td>if test -u file</td>
+<td>file’s set user ID flag is set</td>
+</tr>
+<tr>
+<td>if [ -O file ]</td>
+<td>if test -O file</td>
+<td>file’s owner matches the effective user id of this process</td>
+</tr>
+<tr>
+<td>if [ -G file ]</td>
+<td>if test -G file</td>
+<td>file’s group matches the effective group id of this process</td>
+</tr>
+<tr>
+<td>if [ -S file ]</td>
+<td>if test -S file</td>
+<td>file is a socket</td>
+</tr>
+<tr>
+<td>if [ file1 -nt file2 ]</td>
+<td>if test file1 -nt file2</td>
+<td>file1比 file2新</td>
+</tr>
+<tr>
+<td>if [ file1 -ot file2 ]</td>
+<td>if test file1 -ot file2</td>
+<td>file2比 file2舊</td>
+</tr>
+<tr>
+<td>if [ file1 -ef file2 ]</td>
+<td>if test file1 -ef file2</td>
+<td>file1與 file2參照到相同檔案</td>
+</tr>
+</tbody></table>
+<h5 id="邏輯負運算子"><a href="#邏輯負運算子" class="headerlink" title="邏輯負運算子 !"></a>邏輯負運算子 !</h5><p>可使用 !來否定運算式的判斷，例如：<strong>[ ! -f file ]</strong>。</p>
+<h5 id="邏輯-and運算子-a"><a href="#邏輯-and運算子-a" class="headerlink" title="邏輯 and運算子 -a"></a>邏輯 and運算子 -a</h5><p>例如: <strong>[ -f file1  -a  -f file2 ]</strong>。</p>
+<h5 id="邏輯-or運算子-o"><a href="#邏輯-or運算子-o" class="headerlink" title="邏輯 or運算子 -o"></a>邏輯 or運算子 -o</h5><p>例如: <strong>[ -f file1  -o  -f file2 ]</strong>。</p>
+<h5 id="括號的使用"><a href="#括號的使用" class="headerlink" title="括號的使用"></a>括號的使用</h5><p>例如: <strong>[ \( -f file1 \)  -a  \(  -f file2 \) ]</strong>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Shell-programming/" rel="tag"># Shell programming</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/8eaa3f8e/" rel="prev" title="使用 GDB 來偵錯 LLVM">
+                  <i class="fa fa-angle-left"></i> 使用 GDB 來偵錯 LLVM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/e9206a47/" rel="next" title="C語言: ++*p, *p++和 *++p的不同">
+                  C語言: ++*p, *p++和 *++p的不同 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

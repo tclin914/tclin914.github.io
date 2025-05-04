@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tclin914.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"找到 ${hits} 個搜索結果（用時 ${time} 毫秒）","hits":"找到 ${hits} 個搜索結果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Integer Calling convention有 32個 32-bit(RV32)或 64-bit(RV64)的暫存器(register)，為 x0-x31，下表為各個暫存器其 ABI Name與其用途：    Register ABI Name Description Saver    x0 zero Hard-wired zero -   x1 ra Return address Cal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RISC-V 指令集架構介紹 - Integer Calling convention">
+<meta property="og:url" content="https://tclin914.github.io/77838749/index.html">
+<meta property="og:site_name" content="Jim&#39;s Dev Blog">
+<meta property="og:description" content="Integer Calling convention有 32個 32-bit(RV32)或 64-bit(RV64)的暫存器(register)，為 x0-x31，下表為各個暫存器其 ABI Name與其用途：    Register ABI Name Description Saver    x0 zero Hard-wired zero -   x1 ra Return address Cal">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-05-08T23:29:20.000Z">
+<meta property="article:modified_time" content="2018-05-08T23:29:20.000Z">
+<meta property="article:author" content="Jim Lin">
+<meta property="article:tag" content="RISC-V">
+<meta property="article:tag" content="Calling convention">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tclin914.github.io/77838749/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://tclin914.github.io/77838749/","path":"77838749/","title":"RISC-V 指令集架構介紹 - Integer Calling convention"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RISC-V 指令集架構介紹 - Integer Calling convention | Jim's Dev Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Jim's Dev Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Integer-Calling-convention"><span class="nav-number">1.</span> <span class="nav-text">Integer Calling convention</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#x0-zero"><span class="nav-number">1.1.</span> <span class="nav-text">x0 (zero)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x1-ra"><span class="nav-number">1.2.</span> <span class="nav-text">x1 (ra)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x2-sp"><span class="nav-number">1.3.</span> <span class="nav-text">x2 (sp)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x3-gp"><span class="nav-number">1.4.</span> <span class="nav-text">x3 (gp)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x4-tp"><span class="nav-number">1.5.</span> <span class="nav-text">x4 (tp)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x5-t0"><span class="nav-number">1.6.</span> <span class="nav-text">x5 (t0)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x6-7-t1-2-x28-31-t3-6"><span class="nav-number">1.7.</span> <span class="nav-text">x6-7 (t1-2) &amp; x28-31 (t3-6)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x8-s0"><span class="nav-number">1.8.</span> <span class="nav-text">x8 (s0)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x9-s1-x18-27-s2-11"><span class="nav-number">1.9.</span> <span class="nav-text">x9 (s1) &amp; x18-27 (s2-11)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x10-x11-a0-1"><span class="nav-number">1.10.</span> <span class="nav-text">x10-x11 (a0-1)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x12-17-a2-7"><span class="nav-number">1.11.</span> <span class="nav-text">x12-17 (a2-7)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RV32E-Calling-Convention"><span class="nav-number">2.</span> <span class="nav-text">RV32E Calling Convention</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jim Lin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://tclin914.github.io/77838749/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jim Lin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RISC-V 指令集架構介紹 - Integer Calling convention | Jim's Dev Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RISC-V 指令集架構介紹 - Integer Calling convention
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-05-09 07:29:20" itemprop="dateCreated datePublished" datetime="2018-05-09T07:29:20+08:00">2018-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/RISC-V/" itemprop="url" rel="index"><span itemprop="name">RISC-V</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="Integer-Calling-convention"><a href="#Integer-Calling-convention" class="headerlink" title="Integer Calling convention"></a>Integer Calling convention</h3><p>有 32個 32-bit(RV32)或 64-bit(RV64)的暫存器(register)，為 x0-x31，下表為各個暫存器其 ABI Name與其用途：</p>
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th>ABI Name</th>
+<th>Description</th>
+<th>Saver</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x0</td>
+<td>zero</td>
+<td>Hard-wired zero</td>
+<td>-</td>
+</tr>
+<tr>
+<td>x1</td>
+<td>ra</td>
+<td>Return address</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x2</td>
+<td>sp</td>
+<td>Stack pointer</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x3</td>
+<td>gp</td>
+<td>Global pointer</td>
+<td>-</td>
+</tr>
+<tr>
+<td>x4</td>
+<td>tp</td>
+<td>Thread pointer</td>
+<td>-</td>
+</tr>
+<tr>
+<td>x5</td>
+<td>t0</td>
+<td>Temporary&#x2F;alternate link register</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x6-7</td>
+<td>t1-2</td>
+<td>Temporaries</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x8</td>
+<td>s0&#x2F;fp</td>
+<td>Saved regsiter&#x2F;frame pointer</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x9</td>
+<td>s1</td>
+<td>Saved register</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x10-11</td>
+<td>a0-1</td>
+<td>Function arguments&#x2F;return values</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x12-17</td>
+<td>a2-7</td>
+<td>Function arguments</td>
+<td>Caller</td>
+</tr>
+<tr>
+<td>x18-27</td>
+<td>s2-11</td>
+<td>Saved registers</td>
+<td>Callee</td>
+</tr>
+<tr>
+<td>x28-31</td>
+<td>t3-6</td>
+<td>Temporaries</td>
+<td>Caller</td>
+</tr>
+</tbody></table>
+<h4 id="x0-zero"><a href="#x0-zero" class="headerlink" title="x0 (zero)"></a>x0 (zero)</h4><p>x0內容值恆為 0，在許多的指令運算中，使用到 0值的機會很多，因此將其中一個暫存器的值直接固定為 0可帶來許多方便。</p>
+<h4 id="x1-ra"><a href="#x1-ra" class="headerlink" title="x1 (ra)"></a>x1 (ra)</h4><p>x1(ra) 使用來放置 return address，當函數(function)要結束返回時，便會返回到此暫存器中所儲存的位址，此暫存器為 Caller save，意謂者在一函數(Caller)中要呼叫另一函數(Callee)之前必須先將放置在 x1中的 Caller返回位址儲存到 stack中，因為當一呼叫其他函式，此被呼叫的函式的返回位址會同樣放到 x1(ra)中，所以此暫存器的內容值保存是由 Caller負責。</p>
+<h4 id="x2-sp"><a href="#x2-sp" class="headerlink" title="x2 (sp)"></a>x2 (sp)</h4><p>x2(sp) 用來放置 stack指標的值，可使用此暫存器對 stack做儲存載入的操作，此暫存器為 Callee save，當一被呼叫的函式想修改此暫存器的內容值前，必須先將此內容給保存下來，並在函式返回前，恢復其原本的值，換句話說，此暫存器的內容值在函式被呼叫前與此函式結束後的值應該保持一致。</p>
+<h4 id="x3-gp"><a href="#x3-gp" class="headerlink" title="x3 (gp)"></a>x3 (gp)</h4><p>x3(gp) 用來放置 global指標的值，此指標通常指向整個執行檔中的某個位址，可利用此指標來讀取資料。</p>
+<h4 id="x4-tp"><a href="#x4-tp" class="headerlink" title="x4 (tp)"></a>x4 (tp)</h4><p>x4(tp) 用來放置 thread指標的值，指向 Thread local storage。</p>
+<h4 id="x5-t0"><a href="#x5-t0" class="headerlink" title="x5 (t0)"></a>x5 (t0)</h4><p>x5(t0) 可用來當做一般的暫存器使用或者是第二個用來放置 return address的暫存器，此暫存器為 Caller save，即 Caller若在呼叫完某一函式後對此暫存器的內容有需要，必須在呼叫此函數之前將其內容值給儲存起來，避免 Callee修改到內容值。</p>
+<h4 id="x6-7-t1-2-x28-31-t3-6"><a href="#x6-7-t1-2-x28-31-t3-6" class="headerlink" title="x6-7 (t1-2) &amp; x28-31 (t3-6)"></a>x6-7 (t1-2) &amp; x28-31 (t3-6)</h4><p>一般的暫存器使用，為 Caller save，呼叫函式前後並不保證其暫存器內容值一致，若 Caller對其暫存器內容值有所需要，必須在呼叫函式前，先儲存起來，待呼叫函式結束後，在恢復其暫存器原本的內容值。</p>
+<h4 id="x8-s0"><a href="#x8-s0" class="headerlink" title="x8 (s0)"></a>x8 (s0)</h4><p>x8 可被當做是 Saved register或 Frame pointer使用，此暫存器為 Callee save，若在某函式內，要使用到此暫存器時，需先將其內容值給儲存起來，才可以使用，並在函式返回之前恢復原先的內容值，因爲在此函數被呼叫前後必須維持此暫存器的內容一致，在程式碼的產生上，可設定是否需要 Frame pointer去指向當前函式所使用到 stack的底部，此非為必要，所以在優化上，以 GCC為例，下 -fomit-frame-pointer選項，可將此暫存器當作 Saved register使用，增加一個可用的暫存器，提升效能。</p>
+<h4 id="x9-s1-x18-27-s2-11"><a href="#x9-s1-x18-27-s2-11" class="headerlink" title="x9 (s1) &amp; x18-27 (s2-11)"></a>x9 (s1) &amp; x18-27 (s2-11)</h4><p>Saved register，為 Callee save，需由 Callee負責其內容值的保存。</p>
+<h4 id="x10-x11-a0-1"><a href="#x10-x11-a0-1" class="headerlink" title="x10-x11 (a0-1)"></a>x10-x11 (a0-1)</h4><p>x10(a0) 與 x11(a1) 使用來傳遞參數或函式返回時會將其返回值放入此暫存器中，為 Caller save。</p>
+<h4 id="x12-17-a2-7"><a href="#x12-17-a2-7" class="headerlink" title="x12-17 (a2-7)"></a>x12-17 (a2-7)</h4><p>x12-17(a2-7) 使用來傳遞參數，為 Caller save。</p>
+<h3 id="RV32E-Calling-Convention"><a href="#RV32E-Calling-Convention" class="headerlink" title="RV32E Calling Convention"></a>RV32E Calling Convention</h3><p>RV32E 只有 16個 32-bit的暫存器，為 x0-x15，有 6個傳遞參數用暫存器 a0-a5，2個 Callee save暫存器 s0-s1，以及 3個 temporaries暫存器 t0-t2。</p>
+<h3 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h3><p>每個暫存器皆可當做一般的暫存器使用，Calling convention 則是規定了一系列的函式與函式之間互動的慣例，例如：如何傳遞參數給函式，如何取得函式結束後回傳的返回值，哪些暫存器的內容值需在函式呼叫前後保持一致，哪些暫存器其值若在函式呼叫結束後仍有需要，則需在函式呼叫前先行儲存起來，若一函式編譯成 object file後，提供外部連結，則須嚴格遵守 Calling convention，才能與其他函式溝通。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RISC-V/" rel="tag"># RISC-V</a>
+              <a href="/tags/Calling-convention/" rel="tag"># Calling convention</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/16df19b4/" rel="prev" title="RISC-V 指令集架構介紹 - RV32I">
+                  <i class="fa fa-angle-left"></i> RISC-V 指令集架構介紹 - RV32I
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/f8c5f0e1/" rel="next" title="Shell programming: case 用法">
+                  Shell programming: case 用法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jim Lin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
