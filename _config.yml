@@ -70,6 +70,7 @@ theme: next
 deploy:
   type: git
   repo: git@github.com:tclin914/tclin914.github.io.git
+  branch: main
 
 abbrlink:
   alg: crc32
